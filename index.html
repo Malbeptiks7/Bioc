@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вадимко - Стильный Вайб</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff0000, #4b0082, #0000ff);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+            max-width: 90%;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px #000, 0 0 15px #ff00cc, 0 0 20px #00ffcc;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 8px #000;
+            opacity: 0;
+            animation: fadeIn 3s forwards;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #fff;
+            background: linear-gradient(90deg, #ff00cc, #00ffcc);
+            border: 2px solid #000;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            animation: fadeIn 4s forwards;
+        }
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+            animation: shake 0.3s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+        .photo-grid {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 5s forwards;
+        }
+        .photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #ff00cc;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+        .photo:hover {
+            transform: scale(1.1);
+        }
+        .easter-egg {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            background: url('https://i.imgur.com/rickroll.gif') no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            z-index: 2;
+            transition: transform 0.3s;
+            opacity: 0;
+            animation: fadeIn 6s forwards;
+        }
+        .easter-egg:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+        @keyframes float1 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(calc(100vw - 100px), calc(100vh - 100px)); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes float2 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(calc(100vw - 80px), -calc(100vh - 80px)); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes float3 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-calc(100vw - 100px), calc(100vh - 100px)); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes float4 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-calc(100vw - 80px), -calc(100vh - 80px)); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes float5 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(calc(100vw / 2 - 50px), calc(100vh / 2 - 50px)); }
+            100% { transform: translate(0, 0); }
+        }
+        .floating-photo {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #ff00cc;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        .floating-photo:nth-child(1) { animation: float1 6s ease-in-out infinite; }
+        .floating-photo:nth-child(2) { animation: float2 7s ease-in-out infinite; }
+        .floating-photo:nth-child(3) { animation: float3 8s ease-in-out infinite; }
+        .floating-photo:nth-child(4) { animation: float4 9s ease-in-out infinite; }
+        .floating-photo:nth-child(5) { animation: float5 10s ease-in-out infinite; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 30px; }
+            p { font-size: 16px; }
+            .btn { padding: 8px 15px; font-size: 12px; }
+            .photo { width: 80px; height: 80px; }
+            .easter-egg { top: 5px; right: 5px; width: 40px; height: 40px; }
+        }
+        /* Снежинки */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            z-index: 3;
+            user-select: none;
+            pointer-events: none;
+            color: #fff;
+            font-size: 24px;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { top: -10px; }
+            100% { top: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Привет, я Вадимко!</h1>
+        <p>А мандарин и Актавиус крутые</p>
+        <div class="photo-grid">
+            <img src="https://i.postimg.cc/Hs9qTcPZ/IMG-20250313-001705-949.jpg" alt="Мандарин" class="photo">
+            <img src="https://i.postimg.cc/TwZ65zrt/IMG-20250313-001822.jpg" alt="Актавиус" class="photo">
+            <a href="https://t.me/biochca"><img src="https://i.postimg.cc/sgWYC72q/IMG-20250313-002030.jpg" alt="Вадимко" class="photo"></a>
+        </div>
+        <a href="https://t.me/biochca" class="btn" target="_blank">Био</a>
+        <a href="https://t.me/vadimkapipirka" class="btn" target="_blank">Я</a>
+        <a href="https://www.tiktok.com/@вадимка" class="btn" target="_blank">ТикТок</a>
+    </div>
+    <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
+    <img src="https://i.postimg.cc/LX7yVf6T/2025031300224134.png" alt="Летающая фотка" class="floating-photo">
+    <img src="https://i.postimg.cc/LX7yVf6T/2025031300224134.png" alt="Летающая фотка" class="floating-photo">
+    <img src="https://i.postimg.cc/LX7yVf6T/2025031300224134.png" alt="Летающая фотка" class="floating-photo">
+    <img src="https://i.postimg.cc/LX7yVf6T/2025031300224134.png" alt="Летающая фотка" class="floating-photo">
+    <img src="https://i.postimg.cc/LX7yVf6T/2025031300224134.png" alt="Летающая фотка" class="floating-photo">
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+</body>
+</html>

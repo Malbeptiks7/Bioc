@@ -41,11 +41,11 @@
                 <button class="btn play-audio" onclick="playAudio()">Включить музыку</button>
                 <div id="chat-container" class="neon-frame">
                     <h2>Чат с Вадимко</h2>
-                    <div id="nickname-section">
+                    <div id="nickname-section" style="display: none;">
                         <input type="text" id="nickname-input" placeholder="Придумай ник..." required>
                         <button onclick="setNickname()">Установить ник</button>
                     </div>
-                    <form id="message-form" style="display: none;">
+                    <form id="message-form">
                         <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
                         <button type="submit">Отправить</button>
                     </form>

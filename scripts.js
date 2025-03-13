@@ -127,30 +127,19 @@ updateTimers();
 // Настройка чат-бота
 const BOT_TOKEN = '7700508327:AAHdzeb88g8QsVU5Bv7L04TW6_ew16Tqm6w';
 let CHAT_ID = null;
-let userNickname = null;
 
 const chatMessages = document.getElementById('chat-messages');
 const messageForm = document.getElementById('message-form');
-const nicknameInput = document.getElementById('nickname-input');
+const messageInput = document.getElementById('message-input');
 const nicknameSection = document.getElementById('nickname-section');
 
-function setNickname() {
-    userNickname = nicknameInput.value.trim();
-    if (userNickname) {
-        nicknameSection.style.display = 'none';
-        messageForm.style.display = 'block';
-        addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
-        getChatId();
-    } else {
-        alert('Придумай ник!');
-    }
-}
+nicknameSection.style.display = 'none'; // Убираем секцию ника
 
 messageForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const messageText = messageInput.value.trim();
-    if (messageText && userNickname) {
-        addMessage(`${userNickname}: ${messageText}`, 'user-message');
+    if (messageText) {
+        addMessage(`Ты: ${messageText}`, 'user-message');
         if (!CHAT_ID) {
             addMessage('Проверяю настройки чата...', 'bot-message');
             await getChatId();
@@ -162,7 +151,7 @@ messageForm.addEventListener('submit', async (e) => {
         }
         messageInput.value = '';
     } else {
-        addMessage('Сначала установи ник и напиши сообщение!', 'bot-message');
+        addMessage('Напиши сообщение!', 'bot-message');
     }
 });
 
@@ -204,7 +193,7 @@ async function sendMessageToBot(message) {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     const payload = {
         chat_id: CHAT_ID,
-        text: `Сообщение от ${userNickname}:\n${message}`
+        text: message
     };
 
     try {
@@ -248,9 +237,9 @@ function checkUpdates() {
                 data.result.forEach(update => {
                     if (update.message && update.message.chat.id === CHAT_ID) {
                         const messageText = update.message.text;
-                        if (messageText.startsWith('Ответ на ') && userNickname) {
-                            const replyText = messageText.replace('Ответ на ', '');
-                            addMessage(`Вадимко: ${replyText}`, 'bot-message');
+                        const replyTo = update.message.reply_to_message?.text;
+                        if (replyTo && messageText) {
+                            addMessage(`Вадимко: ${messageText}`, 'bot-message');
                         }
                     }
                 });

@@ -45,6 +45,27 @@ h1 {
     color: #b0b0b0;
     text-shadow: 2px 2px 5px #000;
 }
+.links {
+    margin-top: 10px;
+}
+.link-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: #fff;
+    background: #ff00cc;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+.link-btn:hover {
+    transform: scale(1.1);
+    background: #00ffcc;
+    color: #1a1a1a;
+}
 .main-content {
     display: flex;
     justify-content: space-between;
@@ -58,6 +79,14 @@ h1 {
     border: 2px solid #00ffcc;
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9), 0 0 15px #00ffcc;
+}
+.photo-section h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    color: #ff00cc;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px #ff00cc;
 }
 .photo-grid {
     display: grid;
@@ -74,7 +103,6 @@ h1 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 10px #ff00cc;
     transition: transform 0.3s;
     cursor: pointer;
-    position: relative;
 }
 .photo:hover {
     transform: scale(1.1);
@@ -101,6 +129,27 @@ h1 {
     flex-direction: column;
     gap: 15px;
 }
+.timer-section {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #00ffcc;
+    margin-bottom: 15px;
+}
+.timer-section h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    color: #ff00cc;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px #ff00cc;
+}
+.timer-section p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #e0e0e0;
+    margin: 5px 0;
+}
 .btn {
     display: inline-block;
     padding: 12px 20px;
@@ -125,8 +174,11 @@ h1 {
     background: rgba(20, 20, 20, 0.9);
     padding: 20px;
     border-radius: 10px;
+}
+.neon-frame {
     border: 2px solid #00ffcc;
     box-shadow: 0 0 15px #00ffcc;
+    padding: 10px;
 }
 #chat-container h2 {
     font-family: 'Press Start 2P', cursive;
@@ -135,6 +187,35 @@ h1 {
     text-align: center;
     margin-bottom: 15px;
     text-shadow: 0 0 5px #ff00cc;
+}
+#nickname-section {
+    margin-bottom: 15px;
+}
+#nickname-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    background: rgba(40, 40, 40, 0.9);
+    color: #e0e0e0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+#nickname-section button {
+    width: 100%;
+    padding: 8px;
+    background: #ff00cc;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#nickname-section button:hover {
+    background: #00ffcc;
 }
 #message-input {
     width: 100%;
@@ -192,7 +273,7 @@ h1 {
     left: 20px;
     width: 50px;
     height: 50px;
-    background: url('https://media.giphy.com/media/3o6Zt4HU9uwq3zKXyM/giphy.gif') no-repeat center;
+    background: url('images/rickroll.gif') no-repeat center;
     background-size: contain;
     cursor: pointer;
     z-index: 2;
@@ -209,16 +290,13 @@ h1 {
     right: 20px;
     width: 70px;
     height: 70px;
-    background: url('https://media.giphy.com/media/3o6Zt4HU9uwq3zKXyM/giphy.gif') no-repeat center;
+    background: url('images/QzX5k.gif') no-repeat center;
     background-size: contain;
     cursor: pointer;
     z-index: 2;
     transition: transform 0.3s;
     opacity: 0;
     animation: fadeIn 6s forwards;
-}
-.cat-egg:hover {
-    transform: scale(1.1);
 }
 @keyframes fadeIn {
     0% { opacity: 0; }
@@ -251,26 +329,26 @@ h1 {
     0%, 100% { opacity: 0.8; }
     50% { opacity: 0.4; }
 }
-.float-text {
+.floating-image {
     position: absolute;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    color: #ff00cc;
-    text-shadow: 2px 2px 5px #000, 0 0 8px #ff00cc;
-    animation: floatText 10s infinite;
-    z-index: 3;
+    animation: floatImage 15s infinite;
+    opacity: 0;
+    animation-delay: 2s;
 }
-@keyframes floatText {
-    0% { transform: translateY(100vh); }
-    100% { transform: translateY(-100vh); }
+@keyframes floatImage {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+    25% { transform: translate(50px, -50px) rotate(10deg); }
+    50% { transform: translate(100px, 0) rotate(0deg); }
+    75% { transform: translate(50px, 50px) rotate(-10deg); }
+    100% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
 }
-.meme-preview {
+.greeting-preview {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     width: 300px;
-    height: 300px;
+    height: 100px;
     background: rgba(20, 20, 20, 0.9);
     border: 3px solid #ff00cc;
     border-radius: 15px;
@@ -281,14 +359,16 @@ h1 {
     opacity: 0;
     transition: transform 0.3s, opacity 0.3s;
 }
-.meme-preview.active {
+.greeting-preview.active {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }
-.meme-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 10px;
+.greeting-preview p {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #ff00cc;
+    text-align: center;
+    text-shadow: 0 0 5px #ff00cc;
 }
 @media (max-width: 600px) {
     .header {
@@ -338,8 +418,14 @@ h1 {
         width: 40px;
         height: 40px;
     }
-    .meme-preview {
+    .greeting-preview {
         width: 200px;
-        height: 200px;
+        height: 80px;
+    }
+    .timer-section h3 {
+        font-size: 14px;
+    }
+    .timer-section p {
+        font-size: 12px;
     }
 }

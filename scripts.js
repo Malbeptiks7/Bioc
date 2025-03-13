@@ -40,13 +40,13 @@ function loadPhotos() {
     const photoGrid = document.getElementById('photo-grid');
     if (!photoGrid) return;
 
-    const photos = [
+    const mainPhotos = [
+        { baseName: 'IMG-20250313-002030', alt: 'Вадимко', caption: 'Вадимко' },
         { baseName: 'IMG-20250313-001705-949', alt: 'Мандарин', caption: 'Мандарин' },
-        { baseName: 'IMG-20250313-001822', alt: 'Актавиус', caption: 'Актавиус' },
-        { baseName: 'IMG-20250313-002030', alt: 'Вадимко', caption: 'Вадимко' }
+        { baseName: 'IMG-20250313-001822', alt: 'Актавиус', caption: 'Актавиус' }
     ];
 
-    photos.forEach(photo => {
+    mainPhotos.forEach(photo => {
         const imgContainer = document.createElement('div');
         imgContainer.className = 'photo-container';
         imgContainer.style.position = 'relative';
@@ -63,7 +63,7 @@ function loadPhotos() {
         let loaded = false;
 
         for (let ext of tryExtensions) {
-            const src = `img/${photo.baseName}.${ext}`;
+            const src = `images/${photo.baseName}.${ext}`;
             const testImg = new Image();
             testImg.onload = () => {
                 if (!loaded) {
@@ -84,24 +84,73 @@ function loadPhotos() {
     });
 }
 
+// Летающие фото
+const floatingImages = [
+    'heart.png', 'leaf.png', 'mandarin-icon.png', 'butterfly.png', 'parallax-bg.jpg',
+    '20250313-002414.jpg', 'IMG-20250313-002030.jpg', 'IMG-20250313-001822.jpg'
+];
+
+function createFloatingImage() {
+    const img = document.createElement('img');
+    img.className = 'floating-image';
+    img.src = `images/${floatingImages[Math.floor(Math.random() * floatingImages.length)]}`;
+    img.style.width = Math.random() * 50 + 30 + 'px';
+    img.style.left = Math.random() * 80 + 10 + 'vw';
+    img.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(img);
+    setTimeout(() => img.remove(), 15000);
+}
+setInterval(createFloatingImage, 2000);
+
+// Таймеры
+function updateTimers() {
+    const now = new Date();
+    const newYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+    if (now > newYear) newYear.setFullYear(now.getFullYear() + 1);
+    const newYearDiff = Math.ceil((newYear - now) / (1000 * 60 * 60 * 24));
+    document.getElementById('new-year-days').textContent = newYearDiff;
+
+    const birthday = new Date(now.getFullYear(), 8, 27, 23, 59, 59); // 27 сентября
+    if (now > birthday) birthday.setFullYear(now.getFullYear() + 1);
+    const birthdayDiff = Math.ceil((birthday - now) / (1000 * 60 * 60 * 24));
+    document.getElementById('birthday-days').textContent = birthdayDiff;
+}
+setInterval(updateTimers, 1000);
+updateTimers();
+
 // Настройка чат-бота
 const BOT_TOKEN = '7700508327:AAHdzeb88g8QsVU5Bv7L04TW6_ew16Tqm6w';
 let CHAT_ID = null;
+let userNickname = null;
 
 const chatMessages = document.getElementById('chat-messages');
 const messageForm = document.getElementById('message-form');
-const messageInput = document.getElementById('message-input');
+const nicknameInput = document.getElementById('nickname-input');
+const nicknameSection = document.getElementById('nickname-section');
+
+function setNickname() {
+    userNickname = nicknameInput.value.trim();
+    if (userNickname) {
+        nicknameSection.style.display = 'none';
+        messageForm.style.display = 'block';
+        addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
+    } else {
+        alert('Придумай ник!');
+    }
+}
 
 messageForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const messageText = messageInput.value.trim();
-    if (messageText) {
-        addMessage(messageText, 'user-message');
+    if (messageText && userNickname) {
+        addMessage(`${userNickname}: ${messageText}`, 'user-message');
         if (!CHAT_ID) {
             await getChatId();
         }
         await sendMessageToBot(messageText);
         messageInput.value = '';
+    } else {
+        addMessage('Сначала установи ник и напиши сообщение!', 'bot-message');
     }
 });
 
@@ -134,7 +183,7 @@ async function sendMessageToBot(message) {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     const payload = {
         chat_id: CHAT_ID,
-        text: `Новое сообщение от пользователя:\n${message}`
+        text: `Сообщение от ${userNickname}:\n${message}`
     };
 
     try {
@@ -174,8 +223,9 @@ function checkUpdates() {
                 data.result.forEach(update => {
                     if (update.message && update.message.text && update.message.chat.id == CHAT_ID) {
                         const messageText = update.message.text;
-                        if (!messageText.startsWith('Новое сообщение от пользователя')) {
-                            addMessage(`Вадимко: ${messageText}`, 'bot-message');
+                        if (messageText.startsWith('Ответ на ') && userNickname) {
+                            const replyText = messageText.replace('Ответ на ', '');
+                            addMessage(`Вадимко: ${replyText}`, 'bot-message');
                         }
                     }
                 });
@@ -206,35 +256,25 @@ function playAudio() {
     const audio = document.getElementById('background-audio');
     audio.volume = 0.3;
     audio.paused ? audio.play() : audio.pause();
-    document.querySelector('.play-audio').textContent = audio.paused ? 'Включить музыку' : 'Выключить музыку';
+    // Здесь можно добавить кнопку, если захочешь
 }
 
-// Плавающий текст
-const phrases = ['Мандарин — сила!', 'Вадимко рулит!', 'Актавиус топ!', 'Неон вайб!', 'Против царя!'];
-function createFloatText() {
-    const text = document.createElement('div');
-    text.className = 'float-text';
-    text.innerHTML = phrases[Math.floor(Math.random() * phrases.length)];
-    text.style.left = Math.random() * 80 + 10 + 'vw';
-    document.body.appendChild(text);
-    setTimeout(() => text.remove(), 9000);
-}
-setInterval(createFloatText, 2500);
-
-// Случайный мем
-function showRandomMeme() {
-    const preview = document.getElementById('meme-preview');
-    const img = document.createElement('img');
-    const memes = [
-        'https://media.giphy.com/media/3o6Zt4HU9uwq3zKXyM/giphy.gif',
-        'https://media.giphy.com/media/l0HlP5T8oJq9gqQ2Q/giphy.gif',
-        'https://media.giphy.com/media/3o7aDcz1M9K5bYp7qM/giphy.gif'
-    ];
-    img.src = memes[Math.floor(Math.random() * memes.length)];
+// Случайное приветствие
+const greetings = [
+    'Привет, гость! 😄',
+    'Добро пожаловать в мир Вадимко! 🌟',
+    'Мандарин приветствует тебя! 🍊',
+    'Актавиус говорит: "Ты крут!" 💪',
+    'Неон вайб активирован! ✨'
+];
+function showRandomGreeting() {
+    const preview = document.getElementById('greeting-preview');
+    const p = document.createElement('p');
+    p.textContent = greetings[Math.floor(Math.random() * greetings.length)];
     preview.innerHTML = '';
-    preview.appendChild(img);
+    preview.appendChild(p);
     preview.classList.add('active');
-    setTimeout(() => preview.classList.remove('active'), 5000);
+    setTimeout(() => preview.classList.remove('active'), 3000);
 }
 
 // Инициализация

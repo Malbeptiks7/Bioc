@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div id="container">
@@ -19,18 +20,31 @@
         <div class="neon-line right"></div>
         <header class="header">
             <h1>Вадимко</h1>
-            <p class="subtitle">Мир Мандарина и Актавиуса</p>
+            <p class="subtitle">Крутые Мандаринка(безочка)и Актавиус</p>
+            <div class="links">
+                <a href="https://t.me/vadimkapipirka" target="_blank" class="link-btn">Личка</a>
+                <a href="https://t.me/biochca" target="_blank" class="link-btn">Моё Био</a>
+            </div>
         </header>
         <main class="main-content">
             <section class="photo-section">
+                <h2>Галерея</h2>
                 <div class="photo-grid" id="photo-grid"></div>
             </section>
             <aside class="sidebar">
-                <button class="btn play-audio" onclick="playAudio()">Включить музыку</button>
-                <button class="btn random-meme" onclick="showRandomMeme()">Случайный мем</button>
-                <div id="chat-container">
+                <div class="timer-section">
+                    <h3>Таймеры</h3>
+                    <p id="new-year-timer">До Нового года: <span id="new-year-days"></span> дней</p>
+                    <p id="birthday-timer">До дня рождения: <span id="birthday-days"></span> дней</p>
+                </div>
+                <button class="btn random-greeting" onclick="showRandomGreeting()">Случайное приветствие</button>
+                <div id="chat-container" class="neon-frame">
                     <h2>Чат с Вадимко</h2>
-                    <form id="message-form">
+                    <div id="nickname-section">
+                        <input type="text" id="nickname-input" placeholder="Придумай ник..." required>
+                        <button onclick="setNickname()">Установить ник</button>
+                    </div>
+                    <form id="message-form" style="display: none;">
                         <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
                         <button type="submit">Отправить</button>
                     </form>
@@ -41,8 +55,8 @@
     </div>
     <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
-    <div id="meme-preview" class="meme-preview"></div>
+    <div id="greeting-preview" class="greeting-preview"></div>
     <script src="scripts.js"></script>
-    <audio id="background-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <audio id="background-audio" src="song.mp3" loop></audio> <!-- Песня лежит в корне -->
 </body>
 </html>

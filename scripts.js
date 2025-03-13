@@ -109,7 +109,7 @@ function createFloatingImage() {
     document.body.appendChild(img);
     setTimeout(() => img.remove(), 15000);
 }
-setInterval(createFloatingImage, 500); // Ускорил до 0.5 секунды для большего количества
+setInterval(createFloatingImage, 500);
 
 // Таймеры
 function updateTimers() {
@@ -127,15 +127,66 @@ function updateTimers() {
 setInterval(updateTimers, 1000);
 updateTimers();
 
+// Плейлист
+const playlist = [
+    'song1.mp3',
+    'song2.mp3',
+    'song3.mp3',
+    'song4.mp3'
+];
+let currentTrackIndex = 0;
+const audio = document.getElementById('background-audio');
+audio.volume = 0.3;
+
+function updateTrackDisplay() {
+    const trackNameElement = document.getElementById('track-name');
+    trackNameElement.textContent = playlist[currentTrackIndex];
+}
+
+function playCurrentTrack() {
+    audio.src = playlist[currentTrackIndex];
+    audio.play().then(() => {
+        document.querySelector('.play-audio').textContent = 'Пауза';
+        updateTrackDisplay();
+    }).catch(error => {
+        console.error('Ошибка воспроизведения:', error);
+        alert('Ошибка: Проверь, есть ли файл ' + playlist[currentTrackIndex] + ' в корне проекта или разреши звук в браузере!');
+    });
+}
+
+function toggleAudio() {
+    if (audio.paused) {
+        playCurrentTrack();
+    } else {
+        audio.pause();
+        document.querySelector('.play-audio').textContent = 'Включить музыку';
+    }
+}
+
+function nextTrack() {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    playCurrentTrack();
+}
+
+function previousTrack() {
+    currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+    playCurrentTrack();
+}
+
+// Автоматический переход к следующему треку
+audio.addEventListener('ended', () => {
+    nextTrack();
+});
+
 // Случайные цитаты
 const quotes = [
-    "Пописял - покакай! 🍊",
-    "какие наху цитати! 💪",
-    "майнкрафт имба! ✨",
-    "дима питух! 😄",
-    "mc.primerise.ru! 🌟",
-    "слава великому mc.primerise.ru♥️♥️♥️🙏🙏, заменит вам, маму, папу, дядю, тетю, отчима, станем всей дружной семьей♥️♥️♥️♥️♥️🙏🙏🙏🙏, великий mc.primerise.ru♥️♥️🙏🙏, о великий mc.primerise.ru♥️♥️🙏🙏🙏! 🚀",
-    "Волк не тот кто волк, а волк тот кто волк! 😺"
+    "Мандаринка всегда рядом! 🍊",
+    "Актавиус говорит: Ты крут! 💪",
+    "Неон вайб — это наш стиль! ✨",
+    "Верь в себя, как я верю в тебя! 😄",
+    "Каждый день — это новое приключение! 🌟",
+    "Ты — часть нашего крутого мира! 🚀",
+    "Улыбайся, как Мандаринка! 😺"
 ];
 
 function showRandomQuote() {
@@ -160,30 +211,13 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Фоновая музыка
-function playAudio() {
-    const audio = document.getElementById('background-audio');
-    audio.volume = 0.3;
-    if (audio.paused) {
-        audio.play().then(() => {
-            document.querySelector('.play-audio').textContent = 'Выключить музыку';
-        }).catch(error => {
-            console.error('Ошибка воспроизведения:', error);
-            alert('Ошибка: Проверь, есть ли song.mp3 в корне проекта или разреши звук в браузере!');
-        });
-    } else {
-        audio.pause();
-        document.querySelector('.play-audio').textContent = 'Включить музыку';
-    }
-}
-
 // Случайное приветствие
 const greetings = [
     'Привет, гость! 😄',
-    'Ыыы, плыве! 🌟',
+    'Добро пожаловать в мир Вадимко! 🌟',
     'Мандаринка приветствует тебя! 🍊',
-    'Актавиус говорит: "Ты крут!(он не врет)" 💪',
-    'Привет(не хейт)! ✨'
+    'Актавиус говорит: "Ты крут!" 💪',
+    'Неон вайб активирован! ✨'
 ];
 function showRandomGreeting() {
     const preview = document.getElementById('greeting-preview');
@@ -198,5 +232,6 @@ function showRandomGreeting() {
 // Инициализация
 window.onload = () => {
     loadPhotos();
+    updateTrackDisplay();
     console.log("Страница загружена!");
 };

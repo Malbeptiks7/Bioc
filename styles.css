@@ -161,7 +161,7 @@ h1 {
     background: #00ffcc;
     color: #1a1a1a;
 }
-#chat-container {
+#quotes-container {
     background: rgba(20, 20, 20, 0.9);
     padding: 20px;
     border-radius: 10px;
@@ -170,7 +170,7 @@ h1 {
     border: 2px solid #00ffcc;
     box-shadow: 0 0 15px #00ffcc;
 }
-#chat-container h2 {
+#quotes-container h2 {
     font-family: 'Press Start 2P', cursive;
     font-size: 20px;
     color: #ff00cc;
@@ -178,84 +178,21 @@ h1 {
     margin-bottom: 15px;
     text-shadow: 0 0 5px #ff00cc;
 }
-#nickname-section {
-    margin-bottom: 15px;
-}
-#nickname-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 2px solid #00ffcc;
-    border-radius: 5px;
-    background: rgba(40, 40, 40, 0.9);
-    color: #e0e0e0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-}
-#nickname-section button {
-    width: 100%;
-    padding: 8px;
-    background: #ff00cc;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#nickname-section button:hover {
-    background: #00ffcc;
-}
-#message-input {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 2px solid #00ffcc;
-    border-radius: 5px;
-    background: rgba(40, 40, 40, 0.9);
-    color: #e0e0e0;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    resize: none;
-}
-#message-form button {
-    width: 100%;
-    padding: 10px;
-    background: #ff00cc;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-#message-form button:hover {
-    background: #00ffcc;
-}
-#chat-messages {
+.quote-display {
     margin-top: 15px;
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 5px;
-}
-.message {
     padding: 10px;
-    margin: 5px 0;
+    background: rgba(40, 40, 40, 0.9);
+    border: 2px solid #00ffcc;
     border-radius: 5px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
-}
-.user-message {
-    background: #00ffcc;
-    color: #1a1a1a;
-    text-align: right;
-}
-.bot-message {
-    background: #ff00cc;
-    color: #fff;
-    text-align: left;
+    color: #e0e0e0;
+    text-shadow: 0 0 5px #ff00cc;
 }
 .easter-egg {
     position: absolute;
@@ -388,21 +325,15 @@ h1 {
         padding: 8px 15px;
         font-size: 10px;
     }
-    #chat-container {
+    #quotes-container {
         padding: 15px;
     }
-    #chat-container h2 {
+    #quotes-container h2 {
         font-size: 16px;
     }
-    #message-input {
-        height: 80px;
+    .quote-display {
         font-size: 12px;
-    }
-    #message-form button {
-        font-size: 10px;
-    }
-    .message {
-        font-size: 12px;
+        min-height: 80px;
     }
     .easter-egg, .cat-egg {
         width: 40px;

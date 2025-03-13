@@ -92,8 +92,9 @@ function loadPhotos() {
 
 // Летающие фото
 const floatingImages = [
-    '20250313-002414.jpg', '20250313-002414.jpg', '20250313-002414.jpg', // Увеличил количество
-    '20250313-002414.jpg', '20250313-002414.jpg', '20250313-002414.jpg',
+    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png', // Много копий
+    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png',
+    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png',
     'heart.png', 'leaf.png', 'mandarin-icon.png', 'butterfly.png', 'parallax-bg.jpg',
     'IMG-20250313-002030.jpg', 'IMG-20250313-001822.jpg'
 ];
@@ -108,7 +109,7 @@ function createFloatingImage() {
     document.body.appendChild(img);
     setTimeout(() => img.remove(), 15000);
 }
-setInterval(createFloatingImage, 1000); // Ускорил появление до 1 секунды
+setInterval(createFloatingImage, 500); // Ускорил до 0.5 секунды для большего количества
 
 // Таймеры
 function updateTimers() {
@@ -126,122 +127,22 @@ function updateTimers() {
 setInterval(updateTimers, 1000);
 updateTimers();
 
-// Настройка чат-бота (версия из первой итерации)
-const BOT_TOKEN = '8176524950:AAGfsNYH5qwFzIvoUmsI-UkzptDMDAYtIVQ'; // Новый токен
-let CHAT_ID = null;
-let userNickname = null;
+// Случайные цитаты
+const quotes = [
+    "Пописял - покакай! 🍊",
+    "какие наху цитати! 💪",
+    "майнкрафт имба! ✨",
+    "дима питух! 😄",
+    "mc.primerise.ru! 🌟",
+    "слава великому mc.primerise.ru♥️♥️♥️🙏🙏, заменит вам, маму, папу, дядю, тетю, отчима, станем всей дружной семьей♥️♥️♥️♥️♥️🙏🙏🙏🙏, великий mc.primerise.ru♥️♥️🙏🙏, о великий mc.primerise.ru♥️♥️🙏🙏🙏! 🚀",
+    "Волк не тот кто волк, а волк тот кто волк! 😺"
+];
 
-const chatMessages = document.getElementById('chat-messages');
-const messageForm = document.getElementById('message-form');
-const nicknameInput = document.getElementById('nickname-input');
-const nicknameSection = document.getElementById('nickname-section');
-
-function setNickname() {
-    userNickname = nicknameInput.value.trim();
-    if (userNickname) {
-        nicknameSection.style.display = 'none';
-        messageForm.style.display = 'block';
-        addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
-        getChatId();
-    } else {
-        alert('Придумай ник!');
-    }
+function showRandomQuote() {
+    const quoteDisplay = document.getElementById('quote-display');
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    quoteDisplay.textContent = randomQuote;
 }
-
-messageForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const messageText = messageInput.value.trim();
-    if (messageText && userNickname) {
-        addMessage(`${userNickname}: ${messageText}`, 'user-message');
-        if (!CHAT_ID) {
-            await getChatId();
-        }
-        if (CHAT_ID) {
-            await sendMessageToBot(messageText);
-        } else {
-            addMessage('Ошибка: Не могу отправить сообщение. Проверь настройки бота в Telegram.', 'bot-message');
-        }
-        messageInput.value = '';
-    } else {
-        addMessage('Сначала установи ник и напиши сообщение!', 'bot-message');
-    }
-});
-
-async function getChatId() {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        if (data.ok && data.result.length > 0) {
-            const update = data.result[data.result.length - 1];
-            CHAT_ID = update.message ? update.message.chat.id : update.my_chat_member.chat.id;
-            console.log('CHAT_ID определён:', CHAT_ID);
-            addMessage('Чат настроен! Теперь я могу отправлять сообщения.', 'bot-message');
-        } else {
-            console.error('Не удалось определить CHAT_ID. Отправь сообщение боту в Telegram (@napisat_vadimy_bot).');
-            addMessage('Ошибка: Отправь сообщение боту в Telegram (@napisat_vadimy_bot), чтобы я мог ответить!', 'bot-message');
-        }
-    } catch (error) {
-        console.error('Ошибка получения CHAT_ID:', error);
-        addMessage('Ошибка: Не могу связаться с Telegram. Проверь интернет или настройки бота!', 'bot-message');
-    }
-}
-
-async function sendMessageToBot(message) {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-    const payload = {
-        chat_id: CHAT_ID,
-        text: `Сообщение от ${userNickname}:\n${message}`
-    };
-
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        const data = await response.json();
-        if (data.ok) {
-            console.log('Сообщение отправлено в Telegram:', data);
-            addMessage('Сообщение отправлено Вадимко! Ожидай ответа...', 'bot-message');
-        } else {
-            console.error('Ошибка отправки:', data);
-            addMessage('Ошибка: Не удалось отправить сообщение. Попробуй снова!', 'bot-message');
-        }
-    } catch (error) {
-        console.error('Ошибка:', error);
-        addMessage('Ошибка: Проблемы с сетью. Попробуй позже!', 'bot-message');
-    }
-}
-
-function addMessage(text, className) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${className}`;
-    messageDiv.textContent = text;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function checkUpdates() {
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                data.result.forEach(update => {
-                    if (update.message && update.message.text && update.message.chat.id == CHAT_ID) {
-                        const messageText = update.message.text;
-                        if (messageText.startsWith('Ответ на ') && userNickname) {
-                            const replyText = messageText.replace('Ответ на ', '');
-                            addMessage(`Вадимко: ${replyText}`, 'bot-message');
-                        }
-                    }
-                });
-            }
-        })
-        .catch(error => console.error('Ошибка получения обновлений:', error));
-}
-setInterval(checkUpdates, 5000);
 
 // Эффект искр при клике
 document.addEventListener('click', (e) => {
@@ -268,7 +169,7 @@ function playAudio() {
             document.querySelector('.play-audio').textContent = 'Выключить музыку';
         }).catch(error => {
             console.error('Ошибка воспроизведения:', error);
-            addMessage('Ошибка: Не удалось воспроизвести песню. Проверь, есть ли файл song.mp3 в корне проекта.', 'bot-message');
+            alert('Ошибка: Проверь, есть ли song.mp3 в корне проекта или разреши звук в браузере!');
         });
     } else {
         audio.pause();
@@ -279,10 +180,10 @@ function playAudio() {
 // Случайное приветствие
 const greetings = [
     'Привет, гость! 😄',
-    'Добро пожаловать в мир Вадимко! 🌟',
+    'Ыыы, плыве! 🌟',
     'Мандаринка приветствует тебя! 🍊',
-    'Актавиус говорит: "Ты крут!" 💪',
-    'Неон вайб активирован! ✨'
+    'Актавиус говорит: "Ты крут!(он не врет)" 💪',
+    'Привет(не хейт)! ✨'
 ];
 function showRandomGreeting() {
     const preview = document.getElementById('greeting-preview');
@@ -297,6 +198,5 @@ function showRandomGreeting() {
 // Инициализация
 window.onload = () => {
     loadPhotos();
-    playAudio();
     console.log("Страница загружена!");
 };

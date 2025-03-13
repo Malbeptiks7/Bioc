@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Сайт Вадимко - Мандаринка(безочка) и Актавиус крутые">
-    <meta name="keywords" content="Вадимко, Мандаринка, Актавиус, 3D, чат-бот, неон">
+    <meta name="keywords" content="Вадимко, Мандаринка, Актавиус, 3D, неон">
     <meta name="author" content="Вадимко">
-    <title>Вадимко - 3D и Чат</title>
+    <title>Вадимко - 3D и Цитаты</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
@@ -39,17 +39,10 @@
                 </div>
                 <button class="btn random-greeting" onclick="showRandomGreeting()">Случайное приветствие</button>
                 <button class="btn play-audio" onclick="playAudio()">Включить музыку</button>
-                <div id="chat-container" class="neon-frame">
-                    <h2>Чат с Вадимко</h2>
-                    <div id="nickname-section">
-                        <input type="text" id="nickname-input" placeholder="Придумай ник..." required>
-                        <button onclick="setNickname()">Установить ник</button>
-                    </div>
-                    <form id="message-form" style="display: none;">
-                        <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
-                        <button type="submit">Отправить</button>
-                    </form>
-                    <div id="chat-messages"></div>
+                <div id="quotes-container" class="neon-frame">
+                    <h2>Цитаты Вадимко</h2>
+                    <button class="btn" onclick="showRandomQuote()">Показать цитату</button>
+                    <div id="quote-display" class="quote-display"></div>
                 </div>
             </aside>
         </main>

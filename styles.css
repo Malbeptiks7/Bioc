@@ -1,0 +1,532 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #ff0000, #ff00cc, #00ffcc, #0000ff, #ff9900, #4b0082, #000000, #ffffff);
+    background-size: 800% 800%;
+    animation: rainbowBackground 10s ease infinite, pulseBackground 2s infinite;
+    color: #fff;
+    min-height: 200vh;
+    position: relative;
+    overflow-x: hidden;
+    cursor: url('https://i.imgur.com/neon-cursor.png'), auto;
+}
+@keyframes rainbowBackground {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+@keyframes pulseBackground {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: #ff00cc;
+    cursor: pointer;
+    z-index: 1000;
+    text-shadow: 0 0 10px #ff00cc;
+}
+.menu {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ff00cc;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 20px #ff00cc;
+}
+.menu p {
+    margin: 0 0 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #00ffcc;
+    text-shadow: 0 0 5px #00ffcc;
+}
+.menu a {
+    display: block;
+    margin: 5px 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: #ff00cc;
+    text-decoration: none;
+    text-shadow: 0 0 5px #ff00cc;
+}
+.menu a:hover {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+}
+.container {
+    text-align: center;
+    padding: 60px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc, 0 0 40px #00ffcc;
+    backdrop-filter: blur(12px);
+    border: 3px solid #ff00cc;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 2s forwards, neonFrame 2s infinite;
+    max-width: 90%;
+    margin: 50px auto;
+}
+@keyframes neonFrame {
+    0%, 100% { border-color: #ff00cc; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc; }
+    50% { border-color: #00ffcc; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px #00ffcc; }
+}
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 50px;
+    margin-bottom: 25px;
+    text-shadow: 4px 4px 15px #000, 0 0 20px #ff00cc, 0 0 40px #00ffcc;
+    color: #ff00cc;
+    animation: glow 1.5s infinite alternate, glitch 5s infinite;
+    cursor: pointer;
+}
+p {
+    font-size: 20px;
+    margin-bottom: 35px;
+    text-shadow: 3px 3px 10px #000, 0 0 10px #ff00cc;
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+}
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 12px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(90deg, #ff00cc, #000);
+    border: 2px solid #ff00cc;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 15px #ff00cc;
+    opacity: 0;
+    animation: fadeIn 4s forwards, pulseBtn 2s infinite;
+}
+.btn:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc;
+    background: linear-gradient(90deg, #000, #ff00cc);
+}
+.music-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 12px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(90deg, #00ffcc, #000);
+    border: 2px solid #00ffcc;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 15px #00ffcc;
+    opacity: 0;
+    animation: fadeIn 4s forwards, pulseBtn 2s infinite;
+}
+.music-btn:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9), 0 0 20px #00ffcc;
+    background: linear-gradient(90deg, #000, #00ffcc);
+}
+.play-audio-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #fff;
+    background: linear-gradient(90deg, #ff9900, #000);
+    border: 2px solid #ff9900;
+    border-radius: 15px;
+    cursor: pointer;
+    z-index: 1000;
+}
+.play-audio-btn:hover {
+    background: linear-gradient(90deg, #000, #ff9900);
+    box-shadow: 0 0 20px #ff9900;
+}
+.photo-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    opacity: 0;
+    animation: fadeIn 5s forwards;
+}
+.photo {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 4px solid #ff00cc;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 15px #ff00cc;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+.photo:hover {
+    transform: scale(1.15);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc;
+}
+.easter-egg {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background: url('images/rickroll.gif') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s;
+    opacity: 0;
+    animation: fadeIn 6s forwards;
+}
+.easter-egg:hover {
+    transform: scale(1.3) rotate(15deg);
+}
+.cat-egg {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 80px;
+    height: 80px;
+    background: url('images/QzX5k.gif') no-repeat center;
+    background-size: contain;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.3s;
+    opacity: 0;
+    animation: fadeIn 7s forwards;
+}
+.cat-egg:hover {
+    transform: scale(1.2);
+}
+.floating-photo {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 3px solid #ff00cc;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 15px #ff00cc;
+    z-index: 0;
+    animation: rainbowShadow 3s infinite;
+}
+.floating-photo:nth-child(1) { animation: fly1 3s ease-in-out infinite; top: 10%; left: 10%; }
+.floating-photo:nth-child(2) { animation: fly2 3.5s ease-in-out infinite; top: 20%; left: 70%; }
+.floating-photo:nth-child(3) { animation: fly3 4s ease-in-out infinite; top: 30%; left: 20%; }
+.floating-photo:nth-child(4) { animation: fly4 4.5s ease-in-out infinite; top: 40%; left: 80%; }
+.floating-photo:nth-child(5) { animation: fly5 5s ease-in-out infinite; top: 50%; left: 30%; }
+.floating-photo:nth-child(6) { animation: fly6 3.2s ease-in-out infinite; top: 60%; left: 60%; }
+.floating-photo:nth-child(7) { animation: fly7 3.8s ease-in-out infinite; top: 70%; left: 15%; }
+.floating-photo:nth-child(8) { animation: fly8 4.2s ease-in-out infinite; top: 80%; left: 85%; }
+.floating-photo:nth-child(9) { animation: fly9 4.8s ease-in-out infinite; top: 15%; left: 50%; }
+.floating-photo:nth-child(10) { animation: fly10 5.5s ease-in-out infinite; top: 25%; left: 40%; }
+@keyframes fly1 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(300px); } }
+@keyframes fly2 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-250px); } }
+@keyframes fly3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(200px); } }
+@keyframes fly4 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-300px); } }
+@keyframes fly5 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(400px); } }
+@keyframes fly6 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-350px); } }
+@keyframes fly7 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(250px); } }
+@keyframes fly8 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-200px); } }
+@keyframes fly9 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(200px) translateY(150px); } }
+@keyframes fly10 { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-300px) translateY(-100px); } }
+.snowflake, .emoji, .neon-drop {
+    position: absolute;
+    color: #ff00cc;
+    font-size: 24px;
+    z-index: 3;
+    pointer-events: none;
+    animation: fall linear infinite;
+    text-shadow: 0 0 10px #ff00cc;
+}
+.neon-drop {
+    width: 5px;
+    height: 20px;
+    background: #ff00cc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ff00cc, 0 0 20px #00ffcc;
+}
+@keyframes fall {
+    0% { transform: translateX(0) translateY(-10vh); opacity: 1; }
+    100% { transform: translateX(50px) translateY(110vh); opacity: 0.3; }
+}
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff00cc;
+    z-index: 2;
+    animation: confettiFall 3s linear forwards;
+    box-shadow: 0 0 10px #ff00cc;
+}
+@keyframes confettiFall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #ff9900;
+    border-radius: 50%;
+    animation: sparkFly 1s ease-out forwards;
+    box-shadow: 0 0 10px #ff9900;
+}
+@keyframes sparkFly {
+    0% { transform: translate(0, 0); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+.mandarin-burst {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: url('images/mandarin-icon.png') no-repeat center;
+    background-size: contain;
+    animation: burstFly 2s ease-out forwards;
+    z-index: 2;
+}
+@keyframes burstFly {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+}
+.spinning-mandarin {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: url('images/mandarin-icon.png') no-repeat center;
+    background-size: contain;
+    animation: spinMandarin 6s infinite linear;
+    z-index: 0;
+}
+@keyframes spinMandarin {
+    0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+}
+.neon-line {
+    position: absolute;
+    background: #ff00cc;
+    box-shadow: 0 0 15px #ff00cc, 0 0 30px #00ffcc;
+    animation: flicker 1s infinite;
+}
+.neon-line.top { top: 0; width: 100%; height: 3px; }
+.neon-line.bottom { bottom: 0; width: 100%; height: 3px; }
+.neon-line.left { left: 0; width: 3px; height: 100%; }
+.neon-line.right { right: 0; width: 3px; height: 100%; }
+.laser {
+    position: absolute;
+    height: 2px;
+    background: #00ffcc;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #ff00cc;
+    animation: laserMove 4s infinite;
+}
+@keyframes laserMove {
+    0% { transform: translateX(-100vw); }
+    100% { transform: translateX(100vw); }
+}
+.disco {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff00cc, #00ffcc, #ff9900);
+    box-shadow: 0 0 20px #ff00cc, 0 0 40px #00ffcc;
+    animation: spin 5s infinite linear;
+    z-index: 0;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.smoke {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.3), rgba(0, 0, 0, 0));
+    animation: smokeRise 8s infinite;
+}
+@keyframes smokeRise {
+    0% { transform: translateY(100vh); opacity: 0.5; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+.float-text {
+    position: absolute;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #ff00cc;
+    text-shadow: 2px 2px 5px #000, 0 0 10px #ff00cc, 0 0 20px #00ffcc;
+    animation: floatText 10s infinite;
+    z-index: 3;
+}
+@keyframes floatText {
+    0% { transform: translateY(100vh); }
+    100% { transform: translateY(-100vh); }
+}
+.star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ff00cc, 0 0 30px #00ffcc;
+    animation: twinkle 2s infinite;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.5); }
+}
+.color-filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 0, 0, 0.2);
+    animation: colorShift 8s infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+@keyframes colorShift {
+    0% { background: rgba(255, 0, 0, 0.2); }
+    33% { background: rgba(0, 255, 255, 0.2); }
+    66% { background: rgba(255, 0, 255, 0.2); }
+    100% { background: rgba(255, 0, 0, 0.2); }
+}
+.lyrics-container {
+    position: absolute;
+    top: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 0 20px #ff00cc;
+    z-index: 2;
+}
+.lyrics-running {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #ff00cc;
+    text-shadow: 0 0 10px #ff00cc;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: runText 20s linear infinite;
+}
+@keyframes runText {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+.lyrics-full {
+    display: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 0 0 5px #ff00cc;
+    margin-top: 20px;
+}
+.lyrics-toggle {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #fff;
+    background: linear-gradient(90deg, #ff00cc, #000);
+    border: 2px solid #ff00cc;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #ff00cc;
+}
+.lyrics-toggle:hover {
+    background: linear-gradient(90deg, #000, #ff00cc);
+    box-shadow: 0 0 20px #ff00cc;
+}
+.neon-pulse {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, #ff00cc, transparent);
+    animation: pulseNeon 3s infinite;
+}
+@keyframes pulseNeon {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+.neon-wave {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background: #00ffcc;
+    box-shadow: 0 0 15px #00ffcc;
+    animation: waveMove 5s infinite;
+}
+@keyframes waveMove {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+.neon-spiral {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 3px solid #ff00cc;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #ff00cc;
+    animation: spinSpiral 4s infinite linear;
+}
+@keyframes spinSpiral {
+    0% { transform: rotate(0deg) scale(1); }
+    100% { transform: rotate(360deg) scale(1.2); }
+}
+@keyframes glow {
+    0% { text-shadow: 4px 4px 15px #000, 0 0 20px #ff00cc; }
+    100% { text-shadow: 6px 6px 20px #000, 0 0 30px #00ffcc; }
+}
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(5px, -5px); }
+    60% { transform: translate(-5px, 0); }
+    80% { transform: translate(5px, 0); }
+}
+@keyframes pulseBtn {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+@keyframes rainbowShadow {
+    0% { box-shadow: 0 15px 40px rgba(255, 0, 0, 0.9); }
+    33% { box-shadow: 0 15px 40px rgba(0, 255, 255, 0.9); }
+    66% { box-shadow: 0 15px 40px rgba(255, 0, 255, 0.9); }
+    100% { box-shadow: 0 15px 40px rgba(255, 0, 0, 0.9); }
+}
+@keyframes fadeIn { to { opacity: 1; } }
+@media (max-width: 600px) {
+    .container { padding: 30px; }
+    h1 { font-size: 35px; }
+    p { font-size: 16px; }
+    .btn, .music-btn { padding: 10px 20px; font-size: 12px; }
+    .photo { width: 90px; height: 90px; }
+    .easter-egg, .cat-egg { width: 50px; height: 50px; }
+    .floating-photo { width: 70px; height: 70px; }
+    .disco { width: 70px; height: 70px; }
+    .spinning-mandarin { width: 30px; height: 30px; }
+    .lyrics-running { font-size: 16px; }
+    .lyrics-full { font-size: 14px; }
+    .menu-icon { font-size: 24px; }
+    .menu { top: 50px; right: 10px; padding: 15px; }
+}

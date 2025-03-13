@@ -12,31 +12,6 @@ function toggleMenu() {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
-// Аудио (автозапуск после первого клика)
-let audioInitialized = false;
-
-function initAudio() {
-    if (!audioInitialized) {
-        const mainAudio = document.createElement('audio');
-        mainAudio.loop = true;
-        mainAudio.innerHTML = `<source src="Audio/LASKX3I_Protiv_carya.mp3" type="audio/mp3">`;
-        document.body.appendChild(mainAudio);
-
-        const hoverAudio = document.createElement('audio');
-        hoverAudio.innerHTML = `<source src="Audio/ssstik.io_1741077266612-_mp3cut.net_-_1_.mp3" type="audio/mp3">`;
-        document.body.appendChild(hoverAudio);
-
-        mainAudio.play().catch((err) => console.log("Ошибка автозапуска:", err));
-        audioInitialized = true;
-
-        hoverAudio.onended = function() {
-            mainAudio.play();
-        };
-    }
-}
-
-document.body.addEventListener('click', initAudio, { once: true });
-
 // Динамическая загрузка фото
 function loadPhotos() {
     const photoGrid = document.getElementById('photo-grid');
@@ -212,11 +187,6 @@ function createNeonSpiral() {
     setTimeout(() => spiral.remove(), 4000);
 }
 setInterval(createNeonSpiral, 2500);
-
-function toggleLyrics() {
-    const fullLyrics = document.querySelector('.lyrics-full');
-    fullLyrics.style.display = fullLyrics.style.display === 'block' ? 'none' : 'block';
-}
 
 // Инициализация
 window.onload = () => {

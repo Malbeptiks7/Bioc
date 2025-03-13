@@ -117,45 +117,6 @@ p {
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc;
     background: linear-gradient(90deg, #000, #ff00cc);
 }
-.music-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    margin: 12px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 16px;
-    color: #fff;
-    background: linear-gradient(90deg, #00ffcc, #000);
-    border: 2px solid #00ffcc;
-    border-radius: 25px;
-    text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 15px #00ffcc;
-    opacity: 0;
-    animation: fadeIn 4s forwards, pulseBtn 2s infinite;
-}
-.music-btn:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.9), 0 0 20px #00ffcc;
-    background: linear-gradient(90deg, #000, #00ffcc);
-}
-.play-audio-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    color: #fff;
-    background: linear-gradient(90deg, #ff9900, #000);
-    border: 2px solid #ff9900;
-    border-radius: 15px;
-    cursor: pointer;
-    z-index: 1000;
-}
-.play-audio-btn:hover {
-    background: linear-gradient(90deg, #000, #ff9900);
-    box-shadow: 0 0 20px #ff9900;
-}
 .photo-grid {
     display: flex;
     justify-content: center;
@@ -184,7 +145,7 @@ p {
     right: 15px;
     width: 60px;
     height: 60px;
-    background: url('images/rickroll.gif') no-repeat center;
+    background: url('img/rickroll.gif') no-repeat center;
     background-size: contain;
     cursor: pointer;
     z-index: 2;
@@ -201,7 +162,7 @@ p {
     left: 15px;
     width: 80px;
     height: 80px;
-    background: url('images/QzX5k.gif') no-repeat center;
+    background: url('img/QzX5k.gif') no-repeat center;
     background-size: contain;
     cursor: pointer;
     z-index: 2;
@@ -293,7 +254,7 @@ p {
     position: absolute;
     width: 30px;
     height: 30px;
-    background: url('images/mandarin-icon.png') no-repeat center;
+    background: url('img/mandarin-icon.png') no-repeat center;
     background-size: contain;
     animation: burstFly 2s ease-out forwards;
     z-index: 2;
@@ -306,7 +267,7 @@ p {
     position: absolute;
     width: 40px;
     height: 40px;
-    background: url('images/mandarin-icon.png') no-repeat center;
+    background: url('img/mandarin-icon.png') no-repeat center;
     background-size: contain;
     animation: spinMandarin 6s infinite linear;
     z-index: 0;
@@ -406,57 +367,6 @@ p {
     66% { background: rgba(255, 0, 255, 0.2); }
     100% { background: rgba(255, 0, 0, 0.2); }
 }
-.lyrics-container {
-    position: absolute;
-    top: 100vh;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 0 20px #ff00cc;
-    z-index: 2;
-}
-.lyrics-running {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    color: #ff00cc;
-    text-shadow: 0 0 10px #ff00cc;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: runText 20s linear infinite;
-}
-@keyframes runText {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-.lyrics-full {
-    display: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: #fff;
-    text-shadow: 0 0 5px #ff00cc;
-    margin-top: 20px;
-}
-.lyrics-toggle {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 14px;
-    color: #fff;
-    background: linear-gradient(90deg, #ff00cc, #000);
-    border: 2px solid #ff00cc;
-    border-radius: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #ff00cc;
-}
-.lyrics-toggle:hover {
-    background: linear-gradient(90deg, #000, #ff00cc);
-    box-shadow: 0 0 20px #ff00cc;
-}
 .neon-pulse {
     position: absolute;
     width: 50px;
@@ -519,14 +429,12 @@ p {
     .container { padding: 30px; }
     h1 { font-size: 35px; }
     p { font-size: 16px; }
-    .btn, .music-btn { padding: 10px 20px; font-size: 12px; }
+    .btn { padding: 10px 20px; font-size: 12px; }
     .photo { width: 90px; height: 90px; }
     .easter-egg, .cat-egg { width: 50px; height: 50px; }
     .floating-photo { width: 70px; height: 70px; }
     .disco { width: 70px; height: 70px; }
     .spinning-mandarin { width: 30px; height: 30px; }
-    .lyrics-running { font-size: 16px; }
-    .lyrics-full { font-size: 14px; }
     .menu-icon { font-size: 24px; }
     .menu { top: 50px; right: 10px; padding: 15px; }
 }

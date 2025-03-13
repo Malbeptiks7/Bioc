@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Сайт Вадимко с 3D и чат-ботом">
-    <meta name="keywords" content="Вадимко, Мандарин, Актавиус, 3D, чат-бот">
+    <meta name="description" content="Сайт Вадимко с 3D, чат-ботом и эффектами">
+    <meta name="keywords" content="Вадимко, Мандарин, Актавиус, 3D, чат-бот, неон">
     <meta name="author" content="Вадимко">
     <title>Вадимко - 3D и Чат</title>
     <link rel="stylesheet" href="styles.css">
@@ -13,21 +13,36 @@
 </head>
 <body>
     <div id="container">
+        <div class="neon-line top"></div>
+        <div class="neon-line bottom"></div>
+        <div class="neon-line left"></div>
+        <div class="neon-line right"></div>
         <header class="header">
             <h1>Вадимко</h1>
             <p class="subtitle">Мир Мандарина и Актавиуса</p>
         </header>
-        <div id="chat-container">
-            <h2>Чат с Вадимко</h2>
-            <form id="message-form">
-                <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
-                <button type="submit">Отправить</button>
-            </form>
-            <div id="chat-messages"></div>
-        </div>
+        <main class="main-content">
+            <section class="photo-section">
+                <div class="photo-grid" id="photo-grid"></div>
+            </section>
+            <aside class="sidebar">
+                <button class="btn play-audio" onclick="playAudio()">Включить музыку</button>
+                <button class="btn random-meme" onclick="showRandomMeme()">Случайный мем</button>
+                <div id="chat-container">
+                    <h2>Чат с Вадимко</h2>
+                    <form id="message-form">
+                        <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
+                        <button type="submit">Отправить</button>
+                    </form>
+                    <div id="chat-messages"></div>
+                </div>
+            </aside>
+        </main>
     </div>
     <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
+    <div id="meme-preview" class="meme-preview"></div>
     <script src="scripts.js"></script>
+    <audio id="background-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 </body>
 </html>

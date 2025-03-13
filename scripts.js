@@ -35,9 +35,58 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// Динамическая загрузка фото
+function loadPhotos() {
+    const photoGrid = document.getElementById('photo-grid');
+    if (!photoGrid) return;
+
+    const photos = [
+        { baseName: 'IMG-20250313-001705-949', alt: 'Мандарин', caption: 'Мандарин' },
+        { baseName: 'IMG-20250313-001822', alt: 'Актавиус', caption: 'Актавиус' },
+        { baseName: 'IMG-20250313-002030', alt: 'Вадимко', caption: 'Вадимко' }
+    ];
+
+    photos.forEach(photo => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'photo-container';
+        imgContainer.style.position = 'relative';
+
+        const img = document.createElement('img');
+        img.className = 'photo';
+        img.alt = photo.alt;
+
+        const caption = document.createElement('div');
+        caption.className = 'photo-caption';
+        caption.textContent = photo.caption;
+
+        const tryExtensions = ['jpg', 'png', 'jpeg'];
+        let loaded = false;
+
+        for (let ext of tryExtensions) {
+            const src = `img/${photo.baseName}.${ext}`;
+            const testImg = new Image();
+            testImg.onload = () => {
+                if (!loaded) {
+                    img.src = src;
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(caption);
+                    photoGrid.appendChild(imgContainer);
+                    loaded = true;
+                }
+            };
+            testImg.onerror = () => {
+                if (!loaded && ext === tryExtensions[tryExtensions.length - 1]) {
+                    console.warn(`Фото ${photo.baseName} не найдено`);
+                }
+            };
+            testImg.src = src;
+        }
+    });
+}
+
 // Настройка чат-бота
 const BOT_TOKEN = '7700508327:AAHdzeb88g8QsVU5Bv7L04TW6_ew16Tqm6w';
-let CHAT_ID = null; // Будем определять динамически
+let CHAT_ID = null;
 
 const chatMessages = document.getElementById('chat-messages');
 const messageForm = document.getElementById('message-form');
@@ -47,23 +96,15 @@ messageForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const messageText = messageInput.value.trim();
     if (messageText) {
-        // Отображение сообщения пользователя
         addMessage(messageText, 'user-message');
-
-        // Если CHAT_ID ещё не определён, получим его
         if (!CHAT_ID) {
             await getChatId();
         }
-
-        // Отправка сообщения тебе в Telegram
         await sendMessageToBot(messageText);
-
-        // Очистка поля ввода
         messageInput.value = '';
     }
 });
 
-// Получение CHAT_ID (выполняется один раз при первом сообщении)
 async function getChatId() {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
     try {
@@ -83,7 +124,6 @@ async function getChatId() {
     }
 }
 
-// Отправка сообщения в Telegram
 async function sendMessageToBot(message) {
     if (!CHAT_ID) {
         console.error('CHAT_ID не определён. Сначала отправь сообщение боту в Telegram.');
@@ -117,7 +157,6 @@ async function sendMessageToBot(message) {
     }
 }
 
-// Отображение сообщений в чате
 function addMessage(text, className) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${className}`;
@@ -126,7 +165,6 @@ function addMessage(text, className) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Получение ответов от тебя (временно через getUpdates)
 function checkUpdates() {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
     fetch(url)
@@ -145,6 +183,62 @@ function checkUpdates() {
         })
         .catch(error => console.error('Ошибка получения обновлений:', error));
 }
-
-// Проверяем обновления каждые 5 секунд
 setInterval(checkUpdates, 5000);
+
+// Эффект искр при клике
+document.addEventListener('click', (e) => {
+    for (let i = 0; i < 8; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = e.clientX + 'px';
+        spark.style.top = e.clientY + 'px';
+        const dx = (Math.random() - 0.5) * 80 + 'px';
+        const dy = (Math.random() - 0.5) * 80 + 'px';
+        spark.style.setProperty('--dx', dx);
+        spark.style.setProperty('--dy', dy);
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 800);
+    }
+});
+
+// Фоновая музыка
+function playAudio() {
+    const audio = document.getElementById('background-audio');
+    audio.volume = 0.3;
+    audio.paused ? audio.play() : audio.pause();
+    document.querySelector('.play-audio').textContent = audio.paused ? 'Включить музыку' : 'Выключить музыку';
+}
+
+// Плавающий текст
+const phrases = ['Мандарин — сила!', 'Вадимко рулит!', 'Актавиус топ!', 'Неон вайб!', 'Против царя!'];
+function createFloatText() {
+    const text = document.createElement('div');
+    text.className = 'float-text';
+    text.innerHTML = phrases[Math.floor(Math.random() * phrases.length)];
+    text.style.left = Math.random() * 80 + 10 + 'vw';
+    document.body.appendChild(text);
+    setTimeout(() => text.remove(), 9000);
+}
+setInterval(createFloatText, 2500);
+
+// Случайный мем
+function showRandomMeme() {
+    const preview = document.getElementById('meme-preview');
+    const img = document.createElement('img');
+    const memes = [
+        'https://media.giphy.com/media/3o6Zt4HU9uwq3zKXyM/giphy.gif',
+        'https://media.giphy.com/media/l0HlP5T8oJq9gqQ2Q/giphy.gif',
+        'https://media.giphy.com/media/3o7aDcz1M9K5bYp7qM/giphy.gif'
+    ];
+    img.src = memes[Math.floor(Math.random() * memes.length)];
+    preview.innerHTML = '';
+    preview.appendChild(img);
+    preview.classList.add('active');
+    setTimeout(() => preview.classList.remove('active'), 5000);
+}
+
+// Инициализация
+window.onload = () => {
+    loadPhotos();
+    console.log("Страница загружена!");
+};

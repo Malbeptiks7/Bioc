@@ -2,29 +2,25 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d, #3a3a3a);
-    background-size: 400% 400%;
-    animation: darkGradient 15s ease infinite;
+    background: #1a1a1a;
     color: #e0e0e0;
     overflow-x: hidden;
     cursor: url('https://i.imgur.com/neon-cursor.png'), auto;
-}
-@keyframes darkGradient {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
 }
 #container {
     position: relative;
     width: 100vw;
     height: 100vh;
+    padding: 20px;
 }
 .header {
-    text-align: left;
-    padding: 20px 40px;
+    text-align: center;
+    padding: 20px;
     background: rgba(0, 0, 0, 0.8);
-    border-bottom: 3px solid #ff00cc;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9), 0 0 20px #ff00cc;
+    border: 3px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc;
+    margin-bottom: 20px;
 }
 h1 {
     font-family: 'Press Start 2P', cursive;
@@ -51,7 +47,7 @@ h1 {
 .link-btn {
     display: inline-block;
     padding: 8px 15px;
-    margin-right: 10px;
+    margin: 0 10px;
     font-family: 'Press Start 2P', cursive;
     font-size: 12px;
     color: #fff;
@@ -69,16 +65,17 @@ h1 {
 .main-content {
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
-    gap: 30px;
+    gap: 20px;
+}
+.photo-section, .sidebar {
+    background: rgba(0, 0, 0, 0.8);
+    border: 3px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc;
+    padding: 20px;
 }
 .photo-section {
     flex: 2;
-    padding: 20px;
-    background: rgba(20, 20, 20, 0.9);
-    border: 2px solid #00ffcc;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9), 0 0 15px #00ffcc;
 }
 .photo-section h2 {
     font-family: 'Press Start 2P', cursive;
@@ -92,7 +89,6 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 15px;
-    margin-top: 20px;
 }
 .photo {
     width: 120px;
@@ -120,11 +116,6 @@ h1 {
 }
 .sidebar {
     flex: 1;
-    padding: 20px;
-    background: rgba(15, 15, 15, 0.9);
-    border: 2px solid #00ffcc;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9), 0 0 15px #00ffcc;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -134,7 +125,7 @@ h1 {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #00ffcc;
-    margin-bottom: 15px;
+    box-shadow: 0 0 10px #00ffcc;
 }
 .timer-section h3 {
     font-family: 'Press Start 2P', cursive;
@@ -151,13 +142,12 @@ h1 {
     margin: 5px 0;
 }
 .btn {
-    display: inline-block;
     padding: 12px 20px;
     font-family: 'Press Start 2P', cursive;
     font-size: 14px;
     color: #fff;
-    background: linear-gradient(90deg, #ff00cc, #2d2d2d);
-    border: 2px solid #ff00cc;
+    background: #ff00cc;
+    border: 2px solid #00ffcc;
     border-radius: 10px;
     text-decoration: none;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -168,7 +158,8 @@ h1 {
 .btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9), 0 0 15px #ff00cc;
-    background: linear-gradient(90deg, #2d2d2d, #ff00cc);
+    background: #00ffcc;
+    color: #1a1a1a;
 }
 #chat-container {
     background: rgba(20, 20, 20, 0.9);
@@ -178,7 +169,6 @@ h1 {
 .neon-frame {
     border: 2px solid #00ffcc;
     box-shadow: 0 0 15px #00ffcc;
-    padding: 10px;
 }
 #chat-container h2 {
     font-family: 'Press Start 2P', cursive;
@@ -372,7 +362,7 @@ h1 {
 }
 @media (max-width: 600px) {
     .header {
-        padding: 15px 20px;
+        padding: 15px;
     }
     h1 {
         font-size: 32px;

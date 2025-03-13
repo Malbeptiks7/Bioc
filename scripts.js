@@ -59,11 +59,17 @@ function loadPhotos() {
         caption.className = 'photo-caption';
         caption.textContent = photo.caption;
 
+        // Проверяем разные расширения
         const tryExtensions = ['jpg', 'png', 'jpeg'];
         let loaded = false;
 
-        for (let ext of tryExtensions) {
-            const src = `images/${photo.baseName}.${ext}`;
+        const loadImage = (extIndex = 0) => {
+            if (extIndex >= tryExtensions.length) {
+                console.warn(`Фото ${photo.baseName} не найдено`);
+                return;
+            }
+
+            const src = `images/${photo.baseName}.${tryExtensions[extIndex]}`;
             const testImg = new Image();
             testImg.onload = () => {
                 if (!loaded) {
@@ -75,12 +81,12 @@ function loadPhotos() {
                 }
             };
             testImg.onerror = () => {
-                if (!loaded && ext === tryExtensions[tryExtensions.length - 1]) {
-                    console.warn(`Фото ${photo.baseName} не найдено`);
-                }
+                loadImage(extIndex + 1); // Пробуем следующее расширение
             };
             testImg.src = src;
-        }
+        };
+
+        loadImage();
     });
 }
 
@@ -134,6 +140,7 @@ function setNickname() {
         nicknameSection.style.display = 'none';
         messageForm.style.display = 'block';
         addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
+        getChatId(); // Пробуем получить CHAT_ID сразу после установки ника
     } else {
         alert('Придумай ник!');
     }
@@ -147,7 +154,11 @@ messageForm.addEventListener('submit', async (e) => {
         if (!CHAT_ID) {
             await getChatId();
         }
-        await sendMessageToBot(messageText);
+        if (CHAT_ID) {
+            await sendMessageToBot(messageText);
+        } else {
+            addMessage('Ошибка: Не могу отправить сообщение. Проверь настройки бота в Telegram.', 'bot-message');
+        }
         messageInput.value = '';
     } else {
         addMessage('Сначала установи ник и напиши сообщение!', 'bot-message');
@@ -163,23 +174,18 @@ async function getChatId() {
             const update = data.result[data.result.length - 1];
             CHAT_ID = update.message ? update.message.chat.id : update.my_chat_member.chat.id;
             console.log('CHAT_ID определён:', CHAT_ID);
+            addMessage('Чат настроен! Теперь я могу отправлять сообщения.', 'bot-message');
         } else {
             console.error('Не удалось определить CHAT_ID. Отправь сообщение боту в Telegram (@VadimkoBot).');
             addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot), чтобы я мог ответить!', 'bot-message');
         }
     } catch (error) {
         console.error('Ошибка получения CHAT_ID:', error);
-        addMessage('Ошибка: Не могу связаться с Telegram. Попробуй позже!', 'bot-message');
+        addMessage('Ошибка: Не могу связаться с Telegram. Проверь интернет или настройки бота!', 'bot-message');
     }
 }
 
 async function sendMessageToBot(message) {
-    if (!CHAT_ID) {
-        console.error('CHAT_ID не определён. Сначала отправь сообщение боту в Telegram.');
-        addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot), чтобы я мог ответить!', 'bot-message');
-        return;
-    }
-
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     const payload = {
         chat_id: CHAT_ID,
@@ -255,15 +261,17 @@ document.addEventListener('click', (e) => {
 function playAudio() {
     const audio = document.getElementById('background-audio');
     audio.volume = 0.3;
-    audio.paused ? audio.play() : audio.pause();
-    // Здесь можно добавить кнопку, если захочешь
+    audio.play().catch(error => {
+        console.error('Ошибка воспроизведения:', error);
+        addMessage('Ошибка: Не удалось воспроизвести песню. Проверь, есть ли файл song.mp3 в корне проекта.', 'bot-message');
+    });
 }
 
 // Случайное приветствие
 const greetings = [
     'Привет, гость! 😄',
     'Добро пожаловать в мир Вадимко! 🌟',
-    'Мандарин приветствует тебя! 🍊',
+    'Мандаринка приветствует тебя! 🍊',
     'Актавиус говорит: "Ты крут!" 💪',
     'Неон вайб активирован! ✨'
 ];
@@ -280,5 +288,6 @@ function showRandomGreeting() {
 // Инициализация
 window.onload = () => {
     loadPhotos();
+    playAudio();
     console.log("Страница загружена!");
 };

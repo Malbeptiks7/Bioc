@@ -35,7 +35,7 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Динамическая загрузка фото
+// Динамическая загрузка фото с переходом на био
 function loadPhotos() {
     const photoGrid = document.getElementById('photo-grid');
     if (!photoGrid) return;
@@ -54,12 +54,12 @@ function loadPhotos() {
         const img = document.createElement('img');
         img.className = 'photo';
         img.alt = photo.alt;
+        img.onclick = () => window.open('https://t.me/biochca', '_blank'); // Переход на био
 
         const caption = document.createElement('div');
         caption.className = 'photo-caption';
         caption.textContent = photo.caption;
 
-        // Проверяем разные расширения
         const tryExtensions = ['jpg', 'png', 'jpeg'];
         let loaded = false;
 
@@ -81,7 +81,7 @@ function loadPhotos() {
                 }
             };
             testImg.onerror = () => {
-                loadImage(extIndex + 1); // Пробуем следующее расширение
+                loadImage(extIndex + 1);
             };
             testImg.src = src;
         };
@@ -140,7 +140,7 @@ function setNickname() {
         nicknameSection.style.display = 'none';
         messageForm.style.display = 'block';
         addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
-        getChatId(); // Пробуем получить CHAT_ID сразу после установки ника
+        getChatId(); // Пробуем получить CHAT_ID сразу
     } else {
         alert('Придумай ник!');
     }
@@ -157,7 +157,7 @@ messageForm.addEventListener('submit', async (e) => {
         if (CHAT_ID) {
             await sendMessageToBot(messageText);
         } else {
-            addMessage('Ошибка: Не могу отправить сообщение. Проверь настройки бота в Telegram.', 'bot-message');
+            addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot), чтобы настроить чат!', 'bot-message');
         }
         messageInput.value = '';
     } else {
@@ -170,22 +170,30 @@ async function getChatId() {
     try {
         const response = await fetch(url);
         const data = await response.json();
+        console.log('API Response:', data); // Для отладки
         if (data.ok && data.result.length > 0) {
             const update = data.result[data.result.length - 1];
-            CHAT_ID = update.message ? update.message.chat.id : update.my_chat_member.chat.id;
-            console.log('CHAT_ID определён:', CHAT_ID);
-            addMessage('Чат настроен! Теперь я могу отправлять сообщения.', 'bot-message');
+            CHAT_ID = update.message ? update.message.chat.id : update.my_chat_member?.chat?.id;
+            console.log('CHAT_ID:', CHAT_ID);
+            if (CHAT_ID) {
+                addMessage('Чат настроен! Теперь могу отправлять сообщения.', 'bot-message');
+            }
         } else {
-            console.error('Не удалось определить CHAT_ID. Отправь сообщение боту в Telegram (@VadimkoBot).');
-            addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot), чтобы я мог ответить!', 'bot-message');
+            console.error('Нет обновлений или ошибка:', data);
+            addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot) для настройки!', 'bot-message');
         }
     } catch (error) {
         console.error('Ошибка получения CHAT_ID:', error);
-        addMessage('Ошибка: Не могу связаться с Telegram. Проверь интернет или настройки бота!', 'bot-message');
+        addMessage('Ошибка сети или токена. Проверь интернет и настройки бота!', 'bot-message');
     }
 }
 
 async function sendMessageToBot(message) {
+    if (!CHAT_ID) {
+        addMessage('Ошибка: CHAT_ID не определён. Настрой чат через Telegram!', 'bot-message');
+        return;
+    }
+
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     const payload = {
         chat_id: CHAT_ID,
@@ -199,16 +207,16 @@ async function sendMessageToBot(message) {
             body: JSON.stringify(payload)
         });
         const data = await response.json();
+        console.log('Send Response:', data); // Для отладки
         if (data.ok) {
-            console.log('Сообщение отправлено в Telegram:', data);
             addMessage('Сообщение отправлено Вадимко! Ожидай ответа...', 'bot-message');
         } else {
             console.error('Ошибка отправки:', data);
-            addMessage('Ошибка: Не удалось отправить сообщение. Попробуй снова!', 'bot-message');
+            addMessage('Ошибка: Сообщение не отправлено. Проверь токен или чат!', 'bot-message');
         }
     } catch (error) {
         console.error('Ошибка:', error);
-        addMessage('Ошибка: Проблемы с сетью. Попробуй позже!', 'bot-message');
+        addMessage('Ошибка сети. Попробуй позже!', 'bot-message');
     }
 }
 
@@ -227,7 +235,7 @@ function checkUpdates() {
         .then(data => {
             if (data.ok) {
                 data.result.forEach(update => {
-                    if (update.message && update.message.text && update.message.chat.id == CHAT_ID) {
+                    if (update.message && update.message.chat.id === CHAT_ID) {
                         const messageText = update.message.text;
                         if (messageText.startsWith('Ответ на ') && userNickname) {
                             const replyText = messageText.replace('Ответ на ', '');
@@ -237,7 +245,7 @@ function checkUpdates() {
                 });
             }
         })
-        .catch(error => console.error('Ошибка получения обновлений:', error));
+        .catch(error => console.error('Ошибка обновлений:', error));
 }
 setInterval(checkUpdates, 5000);
 
@@ -261,10 +269,17 @@ document.addEventListener('click', (e) => {
 function playAudio() {
     const audio = document.getElementById('background-audio');
     audio.volume = 0.3;
-    audio.play().catch(error => {
-        console.error('Ошибка воспроизведения:', error);
-        addMessage('Ошибка: Не удалось воспроизвести песню. Проверь, есть ли файл song.mp3 в корне проекта.', 'bot-message');
-    });
+    if (audio.paused) {
+        audio.play().then(() => {
+            document.querySelector('.play-audio').textContent = 'Выключить музыку';
+        }).catch(error => {
+            console.error('Ошибка воспроизведения:', error);
+            addMessage('Ошибка: Проверь, есть ли song.mp3 в корне проекта или разреши звук в браузере!', 'bot-message');
+        });
+    } else {
+        audio.pause();
+        document.querySelector('.play-audio').textContent = 'Включить музыку';
+    }
 }
 
 // Случайное приветствие
@@ -288,6 +303,5 @@ function showRandomGreeting() {
 // Инициализация
 window.onload = () => {
     loadPhotos();
-    playAudio();
     console.log("Страница загружена!");
 };

@@ -38,6 +38,7 @@
                     <p id="birthday-timer">До дня рождения: <span id="birthday-days"></span> дней</p>
                 </div>
                 <button class="btn random-greeting" onclick="showRandomGreeting()">Случайное приветствие</button>
+                <button class="btn play-audio" onclick="playAudio()">Включить музыку</button>
                 <div id="chat-container" class="neon-frame">
                     <h2>Чат с Вадимко</h2>
                     <div id="nickname-section">
@@ -57,6 +58,6 @@
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
     <div id="greeting-preview" class="greeting-preview"></div>
     <script src="scripts.js"></script>
-    <audio id="background-audio" src="song.mp3" loop autoplay></audio> <!-- Песня в корне -->
+    <audio id="background-audio" src="song.mp3" loop></audio>
 </body>
 </html>

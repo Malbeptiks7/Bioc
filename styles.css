@@ -164,12 +164,12 @@ h1 {
     background: #ff00cc;
     border: 2px solid #00ffcc;
     border-radius: 10px;
-    text-decoration: none;
     transition: transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7), 0 0 10px #ff00cc;
-    text-align: center;
     cursor: pointer;
     margin: 5px;
+    position: relative;
+    z-index: 10; /* Убедись, что кнопки кликабельны */
 }
 .btn:hover {
     transform: translateY(-4px);
@@ -314,58 +314,20 @@ h1 {
     text-shadow: 0 0 5px #ff00cc;
 }
 @media (max-width: 600px) {
-    .header {
-        padding: 15px;
-    }
-    h1 {
-        font-size: 32px;
-    }
-    .subtitle {
-        font-size: 14px;
-    }
-    .main-content {
-        flex-direction: column;
-    }
-    .photo-section, .sidebar {
-        padding: 15px;
-    }
-    .photo {
-        width: 80px;
-        height: 80px;
-    }
-    .photo-caption {
-        font-size: 8px;
-        bottom: -15px;
-    }
-    .btn {
-        padding: 8px 15px;
-        font-size: 10px;
-    }
-    #quotes-container {
-        padding: 15px;
-    }
-    #quotes-container h2 {
-        font-size: 16px;
-    }
-    .quote-display {
-        font-size: 12px;
-        min-height: 80px;
-    }
-    .easter-egg, .cat-egg {
-        width: 40px;
-        height: 40px;
-    }
-    .greeting-preview {
-        width: 200px;
-        height: 80px;
-    }
-    .timer-section h3 {
-        font-size: 14px;
-    }
-    .timer-section p {
-        font-size: 12px;
-    }
-    #current-track {
-        font-size: 10px;
-    }
+    .header { padding: 15px; }
+    h1 { font-size: 32px; }
+    .subtitle { font-size: 14px; }
+    .main-content { flex-direction: column; }
+    .photo-section, .sidebar { padding: 15px; }
+    .photo { width: 80px; height: 80px; }
+    .photo-caption { font-size: 8px; bottom: -15px; }
+    .btn { padding: 8px 15px; font-size: 10px; }
+    #quotes-container { padding: 15px; }
+    #quotes-container h2 { font-size: 16px; }
+    .quote-display { font-size: 12px; min-height: 80px; }
+    .easter-egg, .cat-egg { width: 40px; height: 40px; }
+    .greeting-preview { width: 200px; height: 80px; }
+    .timer-section h3 { font-size: 14px; }
+    .timer-section p { font-size: 12px; }
+    #current-track { font-size: 10px; }
 }

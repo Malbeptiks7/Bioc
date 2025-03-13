@@ -28,14 +28,14 @@ function animate() {
 }
 animate();
 
-// Адаптация размера канваса при изменении окна
+// Адаптация размера канваса
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Динамическая загрузка фото с переходом на био
+// Динамическая загрузка фото
 function loadPhotos() {
     const photoGrid = document.getElementById('photo-grid');
     if (!photoGrid) return;
@@ -80,9 +80,7 @@ function loadPhotos() {
                     loaded = true;
                 }
             };
-            testImg.onerror = () => {
-                loadImage(extIndex + 1);
-            };
+            testImg.onerror = () => loadImage(extIndex + 1);
             testImg.src = src;
         };
 
@@ -92,11 +90,8 @@ function loadPhotos() {
 
 // Летающие фото
 const floatingImages = [
-    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png', // Много копий
-    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png',
-    '2025031300224134.png', '2025031300224134.png', '2025031300224134.png',
-    'heart.png', 'leaf.png', 'mandarin-icon.png', 'butterfly.png', 'parallax-bg.jpg',
-    'IMG-20250313-002030.jpg', 'IMG-20250313-001822.jpg'
+    '2025031300224134.png', 'heart.png', 'leaf.png', 'mandarin-icon.png', 
+    'butterfly.png', 'parallax-bg.jpg', 'IMG-20250313-002030.jpg', 'IMG-20250313-001822.jpg'
 ];
 
 function createFloatingImage() {
@@ -119,7 +114,7 @@ function updateTimers() {
     const newYearDiff = Math.ceil((newYear - now) / (1000 * 60 * 60 * 24));
     document.getElementById('new-year-days').textContent = newYearDiff;
 
-    const birthday = new Date(now.getFullYear(), 8, 27, 23, 59, 59); // 27 сентября
+    const birthday = new Date(now.getFullYear(), 8, 27, 23, 59, 59);
     if (now > birthday) birthday.setFullYear(now.getFullYear() + 1);
     const birthdayDiff = Math.ceil((birthday - now) / (1000 * 60 * 60 * 24));
     document.getElementById('birthday-days').textContent = birthdayDiff;
@@ -139,19 +134,20 @@ const audio = document.getElementById('background-audio');
 audio.volume = 0.3;
 
 function updateTrackDisplay() {
-    const trackNameElement = document.getElementById('track-name');
-    trackNameElement.textContent = playlist[currentTrackIndex];
+    document.getElementById('track-name').textContent = playlist[currentTrackIndex];
 }
 
 function playCurrentTrack() {
     audio.src = playlist[currentTrackIndex];
-    audio.play().then(() => {
-        document.querySelector('.play-audio').textContent = 'Пауза';
-        updateTrackDisplay();
-    }).catch(error => {
-        console.error('Ошибка воспроизведения:', error);
-        alert('Ошибка: Проверь, есть ли файл ' + playlist[currentTrackIndex] + ' в корне проекта или разреши звук в браузере!');
-    });
+    audio.play()
+        .then(() => {
+            document.querySelector('.play-audio').textContent = 'Пауза';
+            updateTrackDisplay();
+        })
+        .catch(error => {
+            console.error('Ошибка воспроизведения:', error);
+            alert('Ошибка: Проверь файл ' + playlist[currentTrackIndex]);
+        });
 }
 
 function toggleAudio() {
@@ -173,26 +169,20 @@ function previousTrack() {
     playCurrentTrack();
 }
 
-// Автоматический переход к следующему треку
-audio.addEventListener('ended', () => {
-    nextTrack();
-});
+audio.addEventListener('ended', nextTrack);
 
 // Случайные цитаты
 const quotes = [
-    "Мандаринка всегда рядом! 🍊",
-    "Актавиус говорит: Ты крут! 💪",
-    "Неон вайб — это наш стиль! ✨",
-    "Верь в себя, как я верю в тебя! 😄",
-    "Каждый день — это новое приключение! 🌟",
-    "Ты — часть нашего крутого мира! 🚀",
-    "Улыбайся, как Мандаринка! 😺"
+    "Привет (не хейт)",
+    "Привет (хейт)",
+    "слава великому mc.primerise.ru♥️♥️♥️🙏🙏, заменит вам, маму, папу, дядю, тетю, отчима, станем всей дружной семьей♥️♥️♥️♥️♥️🙏🙏🙏🙏, великий mc.primerise.ru♥️♥️🙏🙏, о великий mc.primerise.ru♥️♥️🙏🙏🙏",
+    "Актавиус крутой",
+    "Пописял - покакай"
 ];
 
 function showRandomQuote() {
     const quoteDisplay = document.getElementById('quote-display');
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteDisplay.textContent = randomQuote;
+    quoteDisplay.textContent = quotes[Math.floor(Math.random() * quotes.length)];
 }
 
 // Эффект искр при клике
@@ -213,11 +203,12 @@ document.addEventListener('click', (e) => {
 
 // Случайное приветствие
 const greetings = [
-    'Привет, гость! 😄',
-    'Добро пожаловать в мир Вадимко! 🌟',
-    'Мандаринка приветствует тебя! 🍊',
-    'Актавиус говорит: "Ты крут!" 💪',
-    'Неон вайб активирован! ✨'
+    "Дима петух",
+    "С новым годом",
+    "Мандаринка крут",
+    "Привет",
+    "Актавиус тигренок",
+    "Беза"
 ];
 function showRandomGreeting() {
     const preview = document.getElementById('greeting-preview');
@@ -233,5 +224,10 @@ function showRandomGreeting() {
 window.onload = () => {
     loadPhotos();
     updateTrackDisplay();
+    document.querySelector('.play-audio').addEventListener('click', toggleAudio);
+    document.querySelector('.next-audio').addEventListener('click', nextTrack);
+    document.querySelector('.prev-audio').addEventListener('click', previousTrack);
+    document.querySelector('.random-greeting').addEventListener('click', showRandomGreeting);
+    document.querySelector('.quote-btn').addEventListener('click', showRandomQuote);
     console.log("Страница загружена!");
 };

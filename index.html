@@ -37,16 +37,16 @@
                     <p id="new-year-timer">До Нового года: <span id="new-year-days"></span> дней</p>
                     <p id="birthday-timer">До дня рождения: <span id="birthday-days"></span> дней</p>
                 </div>
-                <button class="btn random-greeting" onclick="showRandomGreeting()">Случайное приветствие</button>
+                <button class="btn random-greeting">Случайное приветствие</button>
                 <div class="audio-controls">
                     <p id="current-track">Текущий трек: <span id="track-name">song1.mp3</span></p>
-                    <button class="btn play-audio" onclick="toggleAudio()">Включить музыку</button>
-                    <button class="btn" onclick="previousTrack()">Предыдущий трек</button>
-                    <button class="btn" onclick="nextTrack()">Следующий трек</button>
+                    <button class="btn play-audio">Включить музыку</button>
+                    <button class="btn prev-audio">Предыдущий трек</button>
+                    <button class="btn next-audio">Следующий трек</button>
                 </div>
                 <div id="quotes-container" class="neon-frame">
                     <h2>Цитаты Вадимко</h2>
-                    <button class="btn" onclick="showRandomQuote()">Показать цитату</button>
+                    <button class="btn quote-btn">Показать цитату</button>
                     <div id="quote-display" class="quote-display"></div>
                 </div>
             </aside>
@@ -55,7 +55,7 @@
     <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
     <div id="greeting-preview" class="greeting-preview"></div>
+    <audio id="background-audio"></audio>
     <script src="scripts.js"></script>
-    <audio id="background-audio" src="song1.mp3"></audio>
 </body>
 </html>

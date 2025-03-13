@@ -3,41 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Сайт Вадимко с крутыми фото и эффектами">
-    <meta name="keywords" content="Вадимко, Мандарин, Актавиус, эффекты, неон">
+    <meta name="description" content="Сайт Вадимко с 3D и чат-ботом">
+    <meta name="keywords" content="Вадимко, Мандарин, Актавиус, 3D, чат-бот">
     <meta name="author" content="Вадимко">
-    <title>Вадимко - Главная</title>
+    <title>Вадимко - 3D и Чат</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 </head>
 <body>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-    <div class="menu" id="menu">
-        <p>Посетителей: <span id="visitor-count">0</span></p>
-        <a href="index.html">Главная</a>
-        <a href="gallery.html">Галерея</a>
-    </div>
-    <div class="container">
-        <h1 onclick="spawnConfetti()">Привет, я Вадимко!</h1>
-        <p>Мандарин крутецкий и Актавиус тоже</p>
-        <div class="photo-grid" id="photo-grid"></div>
-        <a href="https://t.me/biochca" class="btn" onclick="spawnSparks(event)" target="_blank">Био</a>
-        <a href="https://t.me/vadimkapipirka" class="btn" onclick="spawnSparks(event)" target="_blank">Я</a>
-        <a href="https://www.tiktok.com/@вадимка" class="btn" onclick="spawnSparks(event)" target="_blank">ТикТок</a>
-        <a href="gallery.html" class="btn">Галерея</a>
-        <button class="btn random-effect" onclick="randomEffect()">Случайный эффект</button>
-        <button class="btn pause-effects" onclick="toggleEffects()">Пауза эффектов</button>
-        <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
-        <button class="btn to-top" onclick="scrollToTop()">Наверх</button>
-        <form id="feedback-form" class="feedback-form">
-            <input type="text" id="feedback-name" placeholder="Имя" required>
-            <textarea id="feedback-message" placeholder="Сообщение" required></textarea>
-            <button type="submit">Отправить</button>
-        </form>
+    <div id="container">
+        <header class="header">
+            <h1>Вадимко</h1>
+            <p class="subtitle">Мир Мандарина и Актавиуса</p>
+        </header>
+        <div id="chat-container">
+            <h2>Чат с Вадимко</h2>
+            <form id="message-form">
+                <textarea id="message-input" placeholder="Напиши сообщение..." required></textarea>
+                <button type="submit">Отправить</button>
+            </form>
+            <div id="chat-messages"></div>
+        </div>
     </div>
     <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
-    <div id="game-container" class="game-container"></div>
     <script src="scripts.js"></script>
 </body>
 </html>

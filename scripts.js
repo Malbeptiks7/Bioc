@@ -12,34 +12,71 @@ function toggleMenu() {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
-// Аудио
-const mainAudio = document.createElement('audio');
-mainAudio.loop = true;
-mainAudio.innerHTML = `<source src="audio/LASKX3I_Protiv_carya.mp3" type="audio/mp3">`;
-document.body.appendChild(mainAudio);
+// Аудио (автозапуск после первого клика)
+let audioInitialized = false;
 
-const hoverAudio = document.createElement('audio');
-hoverAudio.innerHTML = `<source src="audio/ssstik.io_1741077266612-_mp3cut.net_-_1_.mp3" type="audio/mp3">`;
-document.body.appendChild(hoverAudio);
+function initAudio() {
+    if (!audioInitialized) {
+        const mainAudio = document.createElement('audio');
+        mainAudio.loop = true;
+        mainAudio.innerHTML = `<source src="Audio/LASKX3I_Protiv_carya.mp3" type="audio/mp3">`;
+        document.body.appendChild(mainAudio);
 
-function playMainAudio() {
-    mainAudio.play().catch((err) => console.log("Ошибка воспроизведения:", err));
-    document.querySelector('.play-audio-btn')?.style.display = 'none';
+        const hoverAudio = document.createElement('audio');
+        hoverAudio.innerHTML = `<source src="Audio/ssstik.io_1741077266612-_mp3cut.net_-_1_.mp3" type="audio/mp3">`;
+        document.body.appendChild(hoverAudio);
+
+        mainAudio.play().catch((err) => console.log("Ошибка автозапуска:", err));
+        audioInitialized = true;
+
+        hoverAudio.onended = function() {
+            mainAudio.play();
+        };
+    }
 }
 
-function playHoverAudio() {
-    mainAudio.pause();
-    hoverAudio.play().catch((err) => console.log("Ошибка воспроизведения второй песни:", err));
-}
+document.body.addEventListener('click', initAudio, { once: true });
 
-function stopHoverAudio() {
-    hoverAudio.pause();
-    hoverAudio.currentTime = 0;
-}
+// Динамическая загрузка фото
+function loadPhotos() {
+    const photoGrid = document.getElementById('photo-grid');
+    if (!photoGrid) return;
 
-hoverAudio.onended = function() {
-    mainAudio.play();
-};
+    const photos = [
+        { baseName: 'IMG-20250313-001705-949', alt: 'Мандарин' },
+        { baseName: 'IMG-20250313-001822', alt: 'Актавиус' },
+        { baseName: 'IMG-20250313-002030', alt: 'Вадимко' }
+    ];
+
+    photos.forEach(photo => {
+        const img = document.createElement('img');
+        img.className = 'photo';
+        img.onclick = (event) => spawnMandarinBurst(event);
+
+        // Пробуем загрузить .jpg, если не работает — .png, .jpeg
+        const tryExtensions = ['jpg', 'png', 'jpeg'];
+        let loaded = false;
+
+        for (let ext of tryExtensions) {
+            const src = `img/${photo.baseName}.${ext}`;
+            const testImg = new Image();
+            testImg.onload = () => {
+                if (!loaded) {
+                    img.src = src;
+                    img.alt = photo.alt;
+                    photoGrid.appendChild(img);
+                    loaded = true;
+                }
+            };
+            testImg.onerror = () => {
+                if (!loaded && ext === tryExtensions[tryExtensions.length - 1]) {
+                    console.warn(`Фото ${photo.baseName} не найдено ни в одном формате`);
+                }
+            };
+            testImg.src = src;
+        }
+    });
+}
 
 // Эффекты
 document.addEventListener('mousemove', (e) => {
@@ -188,4 +225,5 @@ window.onload = () => {
         console.error("Ошибка: контейнер не найден!");
     }
     updateVisitorCount();
+    loadPhotos(); // Загружаем фото динамически
 };

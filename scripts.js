@@ -54,7 +54,7 @@ function loadPhotos() {
         const img = document.createElement('img');
         img.className = 'photo';
         img.alt = photo.alt;
-        img.onclick = () => window.open('https://t.me/biochca', '_blank'); // Переход на био
+        img.onclick = () => window.open('https://t.me/biochca', '_blank');
 
         const caption = document.createElement('div');
         caption.className = 'photo-caption';
@@ -140,7 +140,7 @@ function setNickname() {
         nicknameSection.style.display = 'none';
         messageForm.style.display = 'block';
         addMessage(`Ник "${userNickname}" установлен! Теперь пиши сообщения.`, 'bot-message');
-        getChatId(); // Пробуем получить CHAT_ID сразу
+        getChatId();
     } else {
         alert('Придумай ник!');
     }
@@ -152,12 +152,13 @@ messageForm.addEventListener('submit', async (e) => {
     if (messageText && userNickname) {
         addMessage(`${userNickname}: ${messageText}`, 'user-message');
         if (!CHAT_ID) {
+            addMessage('Проверяю настройки чата...', 'bot-message');
             await getChatId();
         }
         if (CHAT_ID) {
             await sendMessageToBot(messageText);
         } else {
-            addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot), чтобы настроить чат!', 'bot-message');
+            addMessage('Ошибка: Не удалось настроить чат. Отправь сообщение боту в Telegram (@malbept_bot)!', 'bot-message');
         }
         messageInput.value = '';
     } else {
@@ -169,28 +170,34 @@ async function getChatId() {
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
     try {
         const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка: ${response.status}`);
+        }
         const data = await response.json();
-        console.log('API Response:', data); // Для отладки
+        console.log('Ответ от Telegram API (getUpdates):', data);
+
         if (data.ok && data.result.length > 0) {
             const update = data.result[data.result.length - 1];
-            CHAT_ID = update.message ? update.message.chat.id : update.my_chat_member?.chat?.id;
-            console.log('CHAT_ID:', CHAT_ID);
+            CHAT_ID = update.message?.chat?.id || update.my_chat_member?.chat?.id;
+            console.log('CHAT_ID определён:', CHAT_ID);
             if (CHAT_ID) {
                 addMessage('Чат настроен! Теперь могу отправлять сообщения.', 'bot-message');
+            } else {
+                addMessage('Ошибка: Не удалось определить CHAT_ID. Отправь сообщение @malbept_bot.', 'bot-message');
             }
         } else {
             console.error('Нет обновлений или ошибка:', data);
-            addMessage('Ошибка: Отправь сообщение боту в Telegram (@VadimkoBot) для настройки!', 'bot-message');
+            addMessage('Ошибка: Бот не получил сообщений. Напиши @malbept_bot в Telegram!', 'bot-message');
         }
     } catch (error) {
-        console.error('Ошибка получения CHAT_ID:', error);
-        addMessage('Ошибка сети или токена. Проверь интернет и настройки бота!', 'bot-message');
+        console.error('Ошибка при получении CHAT_ID:', error);
+        addMessage(`Ошибка: Не могу связаться с Telegram. Проверь интернет или токен! (${error.message})`, 'bot-message');
     }
 }
 
 async function sendMessageToBot(message) {
     if (!CHAT_ID) {
-        addMessage('Ошибка: CHAT_ID не определён. Настрой чат через Telegram!', 'bot-message');
+        addMessage('Ошибка: CHAT_ID не определён. Напиши @malbept_bot!', 'bot-message');
         return;
     }
 
@@ -206,17 +213,21 @@ async function sendMessageToBot(message) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
+        if (!response.ok) {
+            throw new Error(`HTTP ошибка: ${response.status}`);
+        }
         const data = await response.json();
-        console.log('Send Response:', data); // Для отладки
+        console.log('Ответ от Telegram API (sendMessage):', data);
+
         if (data.ok) {
             addMessage('Сообщение отправлено Вадимко! Ожидай ответа...', 'bot-message');
         } else {
             console.error('Ошибка отправки:', data);
-            addMessage('Ошибка: Сообщение не отправлено. Проверь токен или чат!', 'bot-message');
+            addMessage(`Ошибка: Не удалось отправить сообщение. ${data.description}`, 'bot-message');
         }
     } catch (error) {
-        console.error('Ошибка:', error);
-        addMessage('Ошибка сети. Попробуй позже!', 'bot-message');
+        console.error('Ошибка при отправке:', error);
+        addMessage(`Ошибка: Проблемы с сетью или токеном. (${error.message})`, 'bot-message');
     }
 }
 

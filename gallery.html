@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Галерея Вадимко с крутыми фото">
+    <meta name="keywords" content="Вадимко, Мандарин, Актавиус, галерея">
+    <meta name="author" content="Вадимко">
     <title>Вадимко - Галерея</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
@@ -18,6 +22,10 @@
         <p>Смотри мои фото!</p>
         <div class="photo-grid" id="photo-grid"></div>
         <a href="index.html" class="btn">Назад</a>
+        <button class="btn random-effect" onclick="randomEffect()">Случайный эффект</button>
+        <button class="btn pause-effects" onclick="toggleEffects()">Пауза эффектов</button>
+        <button class="theme-toggle" onclick="toggleTheme()">Тема</button>
+        <button class="btn to-top" onclick="scrollToTop()">Наверх</button>
     </div>
     <script src="scripts.js"></script>
 </body>

@@ -12,21 +12,29 @@ function toggleMenu() {
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
 
-// Динамическая загрузка фото
+// Динамическая загрузка фото с подписями
 function loadPhotos() {
     const photoGrid = document.getElementById('photo-grid');
     if (!photoGrid) return;
 
     const photos = [
-        { baseName: 'IMG-20250313-001705-949', alt: 'Мандарин' },
-        { baseName: 'IMG-20250313-001822', alt: 'Актавиус' },
-        { baseName: 'IMG-20250313-002030', alt: 'Вадимко' }
+        { baseName: 'IMG-20250313-001705-949', alt: 'Мандарин', caption: 'Мандарин' },
+        { baseName: 'IMG-20250313-001822', alt: 'Актавиус', caption: 'Актавиус' },
+        { baseName: 'IMG-20250313-002030', alt: 'Вадимко', caption: 'Вадимко' }
     ];
 
     photos.forEach(photo => {
+        const imgContainer = document.createElement('div');
+        imgContainer.className = 'photo-container';
+        imgContainer.style.position = 'relative';
+
         const img = document.createElement('img');
         img.className = 'photo';
-        img.onclick = (event) => spawnMandarinBurst(event);
+        img.onclick = (event) => toggleZoomPhoto(event, img);
+
+        const caption = document.createElement('div');
+        caption.className = 'photo-caption';
+        caption.textContent = photo.caption;
 
         // Пробуем загрузить .jpg, если не работает — .png, .jpeg
         const tryExtensions = ['jpg', 'png', 'jpeg'];
@@ -39,7 +47,9 @@ function loadPhotos() {
                 if (!loaded) {
                     img.src = src;
                     img.alt = photo.alt;
-                    photoGrid.appendChild(img);
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(caption);
+                    photoGrid.appendChild(imgContainer);
                     loaded = true;
                 }
             };
@@ -52,6 +62,53 @@ function loadPhotos() {
         }
     });
 }
+
+// Переключение темы
+let isDarkTheme = false;
+function toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+    document.body.style.background = isDarkTheme
+        ? 'linear-gradient(45deg, #000, #333, #666, #999)'
+        : 'linear-gradient(45deg, #ff0000, #ff00cc, #00ffcc, #0000ff, #ff9900, #4b0082, #000000, #ffffff)';
+    document.querySelectorAll('.btn, .theme-toggle').forEach(el => {
+        el.style.background = isDarkTheme
+            ? 'linear-gradient(90deg, #666, #000)'
+            : 'linear-gradient(90deg, #ff00cc, #000)';
+        el.style.borderColor = isDarkTheme ? '#666' : '#ff00cc';
+    });
+    document.querySelectorAll('h1, p, .photo-caption, .menu a').forEach(el => {
+        el.style.color = isDarkTheme ? '#ccc' : '#fff';
+    });
+}
+
+// Увеличение фото при клике
+let zoomPhoto = null;
+function toggleZoomPhoto(event, img) {
+    if (!zoomPhoto) {
+        zoomPhoto = document.createElement('img');
+        zoomPhoto.className = 'zoom-photo';
+        document.body.appendChild(zoomPhoto);
+    }
+    zoomPhoto.src = img.src;
+    zoomPhoto.classList.toggle('active');
+    if (!zoomPhoto.classList.contains('active')) {
+        setTimeout(() => zoomPhoto.remove(), 300); // Удаляем после анимации
+        zoomPhoto = null;
+    }
+}
+
+// Анимация при скролле
+function handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const elements = document.querySelectorAll('.container, .photo-grid, h1, p, .btn');
+    elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+            el.style.animation = 'scrollEffect 1s forwards';
+        }
+    });
+}
+window.addEventListener('scroll', handleScroll);
 
 // Эффекты
 document.addEventListener('mousemove', (e) => {
@@ -84,6 +141,16 @@ function createStar() {
     setTimeout(() => star.remove(), 5000);
 }
 setInterval(createStar, 300);
+
+function createPulsingStar() {
+    const star = document.createElement('div');
+    star.className = 'pulsing-star';
+    star.style.left = Math.random() * 100 + 'vw';
+    star.style.top = Math.random() * 100 + 'vh';
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 5000);
+}
+setInterval(createPulsingStar, 500);
 
 function spawnConfetti() {
     for (let i = 0; i < 50; i++) {
@@ -196,4 +263,16 @@ window.onload = () => {
     }
     updateVisitorCount();
     loadPhotos(); // Загружаем фото динамически
+
+    // Добавляем кнопку переключения темы
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.textContent = 'Тема';
+    themeToggle.onclick = toggleTheme;
+    document.body.appendChild(themeToggle);
+
+    // Создаём 10 пульсирующих звёзд
+    for (let i = 0; i < 10; i++) {
+        createPulsingStar();
+    }
 };

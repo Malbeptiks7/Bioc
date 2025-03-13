@@ -125,7 +125,7 @@ setInterval(updateTimers, 1000);
 updateTimers();
 
 // Настройка чат-бота
-const BOT_TOKEN = '7700508327:AAHdzeb88g8QsVU5Bv7L04TW6_ew16Tqm6w';
+const BOT_TOKEN = '8176524950:AAGfsNYH5qwFzIvoUmsI-UkzptDMDAYtIVQ'; // Новый токен
 let CHAT_ID = null;
 
 const chatMessages = document.getElementById('chat-messages');
@@ -147,7 +147,7 @@ messageForm.addEventListener('submit', async (e) => {
         if (CHAT_ID) {
             await sendMessageToBot(messageText);
         } else {
-            addMessage('Ошибка: Не удалось настроить чат. Отправь сообщение боту в Telegram (@malbept_bot)!', 'bot-message');
+            addMessage('Ошибка: Не удалось настроить чат. Отправь сообщение боту в Telegram (@napisat_vadimy_bot)!', 'bot-message');
         }
         messageInput.value = '';
     } else {
@@ -172,11 +172,11 @@ async function getChatId() {
             if (CHAT_ID) {
                 addMessage('Чат настроен! Теперь могу отправлять сообщения.', 'bot-message');
             } else {
-                addMessage('Ошибка: Не удалось определить CHAT_ID. Отправь сообщение @malbept_bot.', 'bot-message');
+                addMessage('Ошибка: Не удалось определить CHAT_ID. Отправь сообщение @napisat_vadimy_bot.', 'bot-message');
             }
         } else {
             console.error('Нет обновлений или ошибка:', data);
-            addMessage('Ошибка: Бот не получил сообщений. Напиши @malbept_bot в Telegram!', 'bot-message');
+            addMessage('Ошибка: Бот не получил сообщений. Напиши @napisat_vadimy_bot в Telegram!', 'bot-message');
         }
     } catch (error) {
         console.error('Ошибка при получении CHAT_ID:', error);
@@ -186,7 +186,7 @@ async function getChatId() {
 
 async function sendMessageToBot(message) {
     if (!CHAT_ID) {
-        addMessage('Ошибка: CHAT_ID не определён. Напиши @malbept_bot!', 'bot-message');
+        addMessage('Ошибка: CHAT_ID не определён. Напиши @napisat_vadimy_bot!', 'bot-message');
         return;
     }
 

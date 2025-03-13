@@ -171,6 +171,54 @@ function previousTrack() {
 
 audio.addEventListener('ended', nextTrack);
 
+// Видео
+const videos = [
+    { src: 'video1.mp4', thumbnail: 'images/video1-thumbnail.jpg', title: 'Видео 1' },
+    { src: 'video2.mp4', thumbnail: 'images/video2-thumbnail.jpg', title: 'Видео 2' }
+];
+
+function loadVideos() {
+    const videoGrid = document.getElementById('video-grid');
+    if (!videoGrid) return;
+
+    videos.forEach(video => {
+        const videoContainer = document.createElement('div');
+        videoContainer.className = 'video-container';
+
+        const thumbnail = document.createElement('img');
+        thumbnail.className = 'video-thumbnail';
+        thumbnail.src = video.thumbnail || 'images/default-thumbnail.jpg'; // запасная миниатюра
+        thumbnail.alt = video.title;
+        thumbnail.onclick = () => openVideoModal(video.src);
+
+        videoContainer.appendChild(thumbnail);
+        videoGrid.appendChild(videoContainer);
+    });
+}
+
+function openVideoModal(videoSrc) {
+    const modal = document.getElementById('video-modal');
+    const videoPlayer = document.getElementById('video-player');
+    videoPlayer.src = videoSrc;
+    modal.style.display = 'block';
+    videoPlayer.play();
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('video-modal');
+    const videoPlayer = document.getElementById('video-player');
+    videoPlayer.pause();
+    videoPlayer.src = ''; // Сбрасываем источник
+    modal.style.display = 'none';
+}
+
+document.getElementById('close-video').onclick = closeVideoModal;
+document.getElementById('video-modal').onclick = (e) => {
+    if (e.target === document.getElementById('video-modal')) {
+        closeVideoModal();
+    }
+};
+
 // Случайные цитаты
 const quotes = [
     "Привет (не хейт)",
@@ -223,6 +271,7 @@ function showRandomGreeting() {
 // Инициализация
 window.onload = () => {
     loadPhotos();
+    loadVideos();
     updateTrackDisplay();
     document.querySelector('.play-audio').addEventListener('click', toggleAudio);
     document.querySelector('.next-audio').addEventListener('click', nextTrack);

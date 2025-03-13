@@ -156,6 +156,87 @@ h1 {
     margin-bottom: 10px;
     text-shadow: 0 0 5px #ff00cc;
 }
+
+/* Стили для видео-секции */
+.video-section {
+    background: rgba(20, 20, 20, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+}
+.video-section h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    color: #ff00cc;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px #ff00cc;
+}
+#video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.video-container {
+    position: relative;
+    text-align: center;
+}
+.video-thumbnail {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid #ff00cc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.video-thumbnail:hover {
+    transform: scale(1.1);
+}
+
+/* Стили для модального окна */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.video-modal-content {
+    position: relative;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    background: #1a1a1a;
+    border: 3px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc;
+}
+#video-player {
+    width: 100%;
+    border-radius: 5px;
+}
+.close-video {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #ff00cc;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 5px #ff00cc;
+    z-index: 1001; /* Убедимся, что крестик поверх видео */
+}
+.close-video:hover {
+    color: #00ffcc;
+}
+
 .btn {
     padding: 12px 20px;
     font-family: 'Press Start 2P', cursive;
@@ -169,7 +250,7 @@ h1 {
     cursor: pointer;
     margin: 5px;
     position: relative;
-    z-index: 10; /* Убедись, что кнопки кликабельны */
+    z-index: 10;
 }
 .btn:hover {
     transform: translateY(-4px);
@@ -322,6 +403,7 @@ h1 {
     .photo { width: 80px; height: 80px; }
     .photo-caption { font-size: 8px; bottom: -15px; }
     .btn { padding: 8px 15px; font-size: 10px; }
+    .video-thumbnail { width: 80px; height: 50px; }
     #quotes-container { padding: 15px; }
     #quotes-container h2 { font-size: 16px; }
     .quote-display { font-size: 12px; min-height: 80px; }

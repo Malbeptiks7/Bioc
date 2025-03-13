@@ -44,6 +44,10 @@
                     <button class="btn prev-audio">Предыдущий трек</button>
                     <button class="btn next-audio">Следующий трек</button>
                 </div>
+                <div class="video-section">
+                    <h3>Видео</h3>
+                    <div id="video-grid"></div>
+                </div>
                 <div id="quotes-container" class="neon-frame">
                     <h2>Цитаты Вадимко</h2>
                     <button class="btn quote-btn">Показать цитату</button>
@@ -55,6 +59,12 @@
     <div class="easter-egg" onclick="alert('Rickroll в деле! 😂')"></div>
     <div class="cat-egg" onclick="alert('Мяу! Ты нашёл кота! 😺')"></div>
     <div id="greeting-preview" class="greeting-preview"></div>
+    <div id="video-modal" class="video-modal">
+        <div class="video-modal-content">
+            <span id="close-video" class="close-video">×</span>
+            <video id="video-player" controls></video>
+        </div>
+    </div>
     <audio id="background-audio"></audio>
     <script src="scripts.js"></script>
 </body>

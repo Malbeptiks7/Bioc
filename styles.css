@@ -231,7 +231,7 @@ h1 {
     font-weight: bold;
     cursor: pointer;
     text-shadow: 0 0 5px #ff00cc;
-    z-index: 1001; /* Убедимся, что крестик поверх видео */
+    z-index: 1001;
 }
 .close-video:hover {
     color: #00ffcc;
@@ -394,6 +394,39 @@ h1 {
     text-align: center;
     text-shadow: 0 0 5px #ff00cc;
 }
+
+/* Стили для формы приветствия */
+.welcome-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border: 3px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc;
+    text-align: center;
+    z-index: 1004;
+}
+.welcome-form h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    color: #ff00cc;
+    text-shadow: 0 0 5px #ff00cc;
+    margin-bottom: 15px;
+}
+.name-input {
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #e0e0e0;
+    border: 2px solid #ff00cc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 200px;
+}
 @media (max-width: 600px) {
     .header { padding: 15px; }
     h1 { font-size: 32px; }
@@ -412,4 +445,6 @@ h1 {
     .timer-section h3 { font-size: 14px; }
     .timer-section p { font-size: 12px; }
     #current-track { font-size: 10px; }
+    .welcome-form h2 { font-size: 16px; }
+    .name-input { width: 150px; font-size: 12px; padding: 8px; }
 }

@@ -221,7 +221,17 @@ document.getElementById('video-modal').onclick = (e) => {
 
 // Уведомление в Telegram
 const TELEGRAM_BOT_TOKEN = '7475609763:AAFYq6ZURw062S-8AIvX60uKoobdZR9HFww'; // Твой токен
-const TELEGRAM_CHAT_ID = '5678878569'; // Правильный chat_id
+const TELEGRAM_CHAT_ID = '5678878569'; // Твой chat_id
+
+let visitorName = 'Аноним';
+
+function submitName() {
+    const nameInput = document.getElementById('visitor-name').value.trim();
+    visitorName = nameInput || 'Аноним';
+    document.getElementById('welcome-form').style.display = 'none';
+    document.getElementById('container').style.display = 'block';
+    sendVisitNotification();
+}
 
 async function sendVisitNotification() {
     try {
@@ -232,9 +242,12 @@ async function sendVisitNotification() {
         
         // Текущее время
         const time = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+        
+        // User Agent
+        const userAgent = navigator.userAgent;
 
         // Сообщение
-        const message = `Новый посетитель!\nВремя: ${time}\nIP: ${ip}`;
+        const message = `Новый посетитель!\nВремя: ${time}\nIP: ${ip}\nИмя/Ник: ${visitorName}\nUser-Agent: ${userAgent}`;
 
         // Отправка в Telegram
         await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -302,14 +315,13 @@ function showRandomGreeting() {
 
 // Инициализация
 window.onload = () => {
-    loadPhotos();
-    loadVideos();
-    updateTrackDisplay();
-    sendVisitNotification(); // Отправляем уведомление при загрузке
-    document.querySelector('.play-audio').addEventListener('click', toggleAudio);
-    document.querySelector('.next-audio').addEventListener('click', nextTrack);
-    document.querySelector('.prev-audio').addEventListener('click', previousTrack);
-    document.querySelector('.random-greeting').addEventListener('click', showRandomGreeting);
-    document.querySelector('.quote-btn').addEventListener('click', showRandomQuote);
-    console.log("Страница загружена!");
+    // loadPhotos();
+    // loadVideos();
+    // updateTrackDisplay();
+    // document.querySelector('.play-audio').addEventListener('click', toggleAudio);
+    // document.querySelector('.next-audio').addEventListener('click', nextTrack);
+    // document.querySelector('.prev-audio').addEventListener('click', previousTrack);
+    // document.querySelector('.random-greeting').addEventListener('click', showRandomGreeting);
+    // document.querySelector('.quote-btn').addEventListener('click', showRandomQuote);
+    // console.log("Страница загружена!");
 };

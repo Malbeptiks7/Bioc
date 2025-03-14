@@ -173,8 +173,8 @@ audio.addEventListener('ended', nextTrack);
 
 // Видео
 const videos = [
-    { src: 'video1.mp4', thumbnail: 'images/video1-thumbnail.jpg', title: 'Видео 1' },
-    { src: 'video2.mp4', thumbnail: 'images/video2-thumbnail.jpg', title: 'Видео 2' }
+    { src: 'video1.mp4', thumbnail: 'images/video1-thumbnail.jpg' },
+    { src: 'video2.mp4', thumbnail: 'images/video2-thumbnail.jpg' }
 ];
 
 function loadVideos() {
@@ -187,8 +187,8 @@ function loadVideos() {
 
         const thumbnail = document.createElement('img');
         thumbnail.className = 'video-thumbnail';
-        thumbnail.src = video.thumbnail || 'images/default-thumbnail.jpg'; // запасная миниатюра
-        thumbnail.alt = video.title;
+        thumbnail.src = video.thumbnail || 'images/default-thumbnail.jpg';
+        thumbnail.alt = 'Видео';
         thumbnail.onclick = () => openVideoModal(video.src);
 
         videoContainer.appendChild(thumbnail);
@@ -208,7 +208,7 @@ function closeVideoModal() {
     const modal = document.getElementById('video-modal');
     const videoPlayer = document.getElementById('video-player');
     videoPlayer.pause();
-    videoPlayer.src = ''; // Сбрасываем источник
+    videoPlayer.src = '';
     modal.style.display = 'none';
 }
 
@@ -218,6 +218,38 @@ document.getElementById('video-modal').onclick = (e) => {
         closeVideoModal();
     }
 };
+
+// Уведомление в Telegram
+const TELEGRAM_BOT_TOKEN = '7475609763:AAFYq6ZURw062S-8AIvX60uKoobdZR9HFww'; // Твой токен
+const TELEGRAM_CHAT_ID = '7475609763'; // Предполагаемый chat_id, проверь!
+
+async function sendVisitNotification() {
+    try {
+        // Получаем IP через внешний API
+        const ipResponse = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipResponse.json();
+        const ip = ipData.ip || 'Не определен';
+        
+        // Текущее время
+        const time = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
+
+        // Сообщение
+        const message = `Новый посетитель!\nВремя: ${time}\nIP: ${ip}`;
+
+        // Отправка в Telegram
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CHAT_ID,
+                text: message
+            })
+        });
+        console.log('Уведомление отправлено:', message);
+    } catch (error) {
+        console.error('Ошибка при отправке уведомления:', error);
+    }
+}
 
 // Случайные цитаты
 const quotes = [
@@ -273,6 +305,7 @@ window.onload = () => {
     loadPhotos();
     loadVideos();
     updateTrackDisplay();
+    sendVisitNotification(); // Отправляем уведомление при загрузке
     document.querySelector('.play-audio').addEventListener('click', toggleAudio);
     document.querySelector('.next-audio').addEventListener('click', nextTrack);
     document.querySelector('.prev-audio').addEventListener('click', previousTrack);

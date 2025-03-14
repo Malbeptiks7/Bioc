@@ -258,6 +258,12 @@ h1 {
     background: #00ffcc;
     color: #1a1a1a;
 }
+.skip-btn {
+    background: #ff4444; /* Красный для отличия */
+}
+.skip-btn:hover {
+    background: #ff6666;
+}
 #quotes-container {
     background: rgba(20, 20, 20, 0.9);
     padding: 20px;

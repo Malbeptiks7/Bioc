@@ -90,7 +90,7 @@ function loadPhotos() {
 
 // Летающие фото
 const floatingImages = [
-    '2025031300224134.png', 'heart.png', 'leaf.png', 'mandarin-icon.png', 
+    '2025031300224134.png', 'heart.png', 'leaf.png', 'mandarin-icon.png',
     'butterfly.png', 'parallax-bg.jpg', 'IMG-20250313-002030.jpg', 'IMG-20250313-001822.jpg'
 ];
 
@@ -227,10 +227,28 @@ let visitorName = 'Аноним';
 
 function submitName() {
     const nameInput = document.getElementById('visitor-name').value.trim();
-    visitorName = nameInput || 'Аноним';
+    visitorName = nameInput || generateVisitorId();
     document.getElementById('welcome-form').style.display = 'none';
     document.getElementById('container').style.display = 'block';
+    initializeApp();
     sendVisitNotification();
+}
+
+function skipName() {
+    visitorName = generateVisitorId();
+    document.getElementById('welcome-form').style.display = 'none';
+    document.getElementById('container').style.display = 'block';
+    initializeApp();
+    sendVisitNotification();
+}
+
+function generateVisitorId() {
+    const userAgent = navigator.userAgent;
+    const ipResponse = fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip || 'unknown')
+        .catch(() => 'unknown');
+    return `User-${userAgent.split(' ')[0]}-${ipResponse}`;
 }
 
 async function sendVisitNotification() {
@@ -247,7 +265,7 @@ async function sendVisitNotification() {
         const userAgent = navigator.userAgent;
 
         // Сообщение
-        const message = `Новый посетитель!\nВремя: ${time}\nIP: ${ip}\nИмя/Ник: ${visitorName}\nUser-Agent: ${userAgent}`;
+        const message = `Новый посетитель!\nВремя: ${time}\nIP: ${ip}\nИдентификатор: ${visitorName}\nUser-Agent: ${userAgent}`;
 
         // Отправка в Telegram
         await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -313,15 +331,20 @@ function showRandomGreeting() {
     setTimeout(() => preview.classList.remove('active'), 3000);
 }
 
-// Инициализация
+// Инициализация приложения
+function initializeApp() {
+    loadPhotos();
+    loadVideos();
+    updateTrackDisplay();
+    document.querySelector('.play-audio').addEventListener('click', toggleAudio);
+    document.querySelector('.next-audio').addEventListener('click', nextTrack);
+    document.querySelector('.prev-audio').addEventListener('click', previousTrack);
+    document.querySelector('.random-greeting').addEventListener('click', showRandomGreeting);
+    document.querySelector('.quote-btn').addEventListener('click', showRandomQuote);
+    console.log("Приложение инициализировано!");
+}
+
+// Инициализация при загрузке
 window.onload = () => {
-    // loadPhotos();
-    // loadVideos();
-    // updateTrackDisplay();
-    // document.querySelector('.play-audio').addEventListener('click', toggleAudio);
-    // document.querySelector('.next-audio').addEventListener('click', nextTrack);
-    // document.querySelector('.prev-audio').addEventListener('click', previousTrack);
-    // document.querySelector('.random-greeting').addEventListener('click', showRandomGreeting);
-    // document.querySelector('.quote-btn').addEventListener('click', showRandomQuote);
-    // console.log("Страница загружена!");
+    // Ничего не делаем здесь, все в submitName() и skipName()
 };

@@ -15,8 +15,9 @@
 <body>
     <div id="welcome-form" class="welcome-form">
         <h2>Привет! Кто ты?</h2>
-        <input type="text" id="visitor-name" placeholder="Введи имя или ник" class="name-input">
+        <input type="text" id="visitor-name" placeholder="Введи имя или ник (опционально)" class="name-input">
         <button onclick="submitName()" class="btn">Войти</button>
+        <button onclick="skipName()" class="btn skip-btn">Пропустить</button>
     </div>
     <div id="container" style="display: none;">
         <div class="neon-line top"></div>

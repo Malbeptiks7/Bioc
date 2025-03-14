@@ -221,7 +221,7 @@ document.getElementById('video-modal').onclick = (e) => {
 
 // Уведомление в Telegram
 const TELEGRAM_BOT_TOKEN = '7475609763:AAFYq6ZURw062S-8AIvX60uKoobdZR9HFww'; // Твой токен
-const TELEGRAM_CHAT_ID = '7475609763'; // Предполагаемый chat_id, проверь!
+const TELEGRAM_CHAT_ID = '5678878569'; // Правильный chat_id
 
 async function sendVisitNotification() {
     try {
